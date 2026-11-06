@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE devices SET last_contact_at = h.heard_at\n            FROM unnest($2::text[], $3::timestamptz[]) AS h(endpoint_id, heard_at)\n            WHERE devices.tenant_id = $1 AND devices.protocol = 'usp'\n              AND devices.endpoint_id = h.endpoint_id\n              AND (devices.last_contact_at IS NULL OR devices.last_contact_at < h.heard_at)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "TextArray",
+        "TimestamptzArray"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "fcfa4837ec64375855c96922177ba902147388f7d0e6e7d31865ca3902ba8908"
+}

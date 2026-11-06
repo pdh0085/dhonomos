@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE job_devices SET state = 'dispatched', task_id = $3, dispatched_at = now()\n            WHERE job_id = $1 AND device_id = $2 AND state = 'queued'\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "a889401dba939acf8091bd2dc3290bbf7d9d77fad4c08e09dd32202c287ec44e"
+}

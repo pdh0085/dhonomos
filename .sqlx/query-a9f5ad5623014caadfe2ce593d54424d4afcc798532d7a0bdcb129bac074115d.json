@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM device_params WHERE device_id = $1 AND path = ANY($2)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "TextArray"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "a9f5ad5623014caadfe2ce593d54424d4afcc798532d7a0bdcb129bac074115d"
+}

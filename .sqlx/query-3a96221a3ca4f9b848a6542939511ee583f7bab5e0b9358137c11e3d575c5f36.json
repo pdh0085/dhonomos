@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE wg_members SET public_key = $2, updated_at = now(),\n                psk_ciphertext = CASE WHEN preshared_key_enabled AND $3::bytea IS NOT NULL\n                                      THEN $3 ELSE psk_ciphertext END,\n                psk_nonce = CASE WHEN preshared_key_enabled AND $3::bytea IS NOT NULL\n                                 THEN $4 ELSE psk_nonce END\n            WHERE id = $1\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Bytea",
+        "Bytea"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "3a96221a3ca4f9b848a6542939511ee583f7bab5e0b9358137c11e3d575c5f36"
+}

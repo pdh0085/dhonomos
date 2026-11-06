@@ -1,0 +1,38 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT id, definition AS \"definition!\" FROM preset_history\n            WHERE definition::text LIKE '%password%' OR definition::text LIKE '%secret%'\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "preset_history",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "definition!",
+        "type_info": "Jsonb",
+        "origin": {
+          "Table": {
+            "table": "preset_history",
+            "name": "definition"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      true
+    ]
+  },
+  "hash": "024efc8937ad2ba3f7b53c46428d905495fa5391bcca28038b5c9d65cfebf3c0"
+}

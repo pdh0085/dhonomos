@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE devices SET tags = ARRAY(SELECT t FROM unnest(tags) AS t WHERE t <> ALL($2::text[]))\n            WHERE id = $1\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "TextArray"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "782fc92e90c5f6564f21490fc1959dbbc58cf856a0877acb454b51d5e0953d31"
+}

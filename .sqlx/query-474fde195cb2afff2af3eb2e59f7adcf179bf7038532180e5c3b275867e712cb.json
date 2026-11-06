@@ -1,0 +1,31 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE tasks SET\n                state = CASE\n                    WHEN $2::jsonb IS NOT NULL OR $3::text IS NULL THEN 'succeeded'\n                    WHEN attempts < max_attempts THEN 'pending'\n                    ELSE 'failed'\n                END,\n                result = $2, error = $3,\n                finished_at = CASE\n                    WHEN $3::text IS NULL OR attempts >= max_attempts THEN now()\n                END,\n                trace = trace || task_step(\n                    CASE\n                        WHEN $2::jsonb IS NOT NULL OR $3::text IS NULL THEN 'succeeded'\n                        WHEN attempts < max_attempts THEN 'retry'\n                        ELSE 'failed'\n                    END,\n                    attempts, $3)\n            WHERE id = $1 AND device_id = $4 AND state = 'running'\n            RETURNING state\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "state",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "tasks",
+            "name": "state"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Jsonb",
+        "Text",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "474fde195cb2afff2af3eb2e59f7adcf179bf7038532180e5c3b275867e712cb"
+}

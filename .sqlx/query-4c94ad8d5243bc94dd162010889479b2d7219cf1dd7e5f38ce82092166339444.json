@@ -1,0 +1,55 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT c.device_id AS \"device_id!\", c.kind AS \"kind!\", c.username AS \"username!\",\n                   c.confirmed_at IS NOT NULL AS \"confirmed!\",\n                   (d.oui = $2 AND d.product_class = $3 AND d.serial_number = $4) AS \"this_device!\"\n            FROM device_credentials c JOIN devices d ON d.id = c.device_id\n            WHERE d.tenant_id = $1 AND c.kind IN ('acs_auth', 'acs_auth_pending') AND c.username = $5\n            UNION ALL\n            SELECT c.device_id, c.kind, c.username, c.confirmed_at IS NOT NULL, true\n            FROM devices d JOIN device_credentials c ON c.device_id = d.id\n            WHERE d.tenant_id = $1 AND d.oui = $2 AND d.product_class = $3\n              AND d.serial_number = $4 AND c.kind IN ('acs_auth', 'acs_auth_pending')\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "device_id!",
+        "type_info": "Uuid",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 1,
+        "name": "kind!",
+        "type_info": "Text",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 2,
+        "name": "username!",
+        "type_info": "Text",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 3,
+        "name": "confirmed!",
+        "type_info": "Bool",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 4,
+        "name": "this_device!",
+        "type_info": "Bool",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "4c94ad8d5243bc94dd162010889479b2d7219cf1dd7e5f38ce82092166339444"
+}

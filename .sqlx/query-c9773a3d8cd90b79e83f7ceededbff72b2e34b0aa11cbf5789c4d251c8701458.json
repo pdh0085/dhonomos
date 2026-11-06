@@ -1,0 +1,41 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT pending_ciphertext AS \"ciphertext!\", pending_nonce AS \"nonce!\"\n            FROM user_totp\n            WHERE user_id = $1 AND pending_ciphertext IS NOT NULL\n              AND pending_at > now() - make_interval(secs => $2::double precision)\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "ciphertext!",
+        "type_info": "Bytea",
+        "origin": {
+          "Table": {
+            "table": "user_totp",
+            "name": "pending_ciphertext"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "nonce!",
+        "type_info": "Bytea",
+        "origin": {
+          "Table": {
+            "table": "user_totp",
+            "name": "pending_nonce"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Float8"
+      ]
+    },
+    "nullable": [
+      true,
+      true
+    ]
+  },
+  "hash": "c9773a3d8cd90b79e83f7ceededbff72b2e34b0aa11cbf5789c4d251c8701458"
+}

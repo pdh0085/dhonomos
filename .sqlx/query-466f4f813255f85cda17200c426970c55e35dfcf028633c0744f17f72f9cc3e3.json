@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE tasks SET state = 'failed', finished_at = now(),\n                error = 'no completion report from the device (e.g. TransferComplete)',\n                trace = trace || task_step('failed', attempts,\n                    'no completion report from the device (e.g. TransferComplete)')\n            WHERE state = 'running' AND result IS NOT NULL AND started_at < $1\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Timestamptz"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "466f4f813255f85cda17200c426970c55e35dfcf028633c0744f17f72f9cc3e3"
+}

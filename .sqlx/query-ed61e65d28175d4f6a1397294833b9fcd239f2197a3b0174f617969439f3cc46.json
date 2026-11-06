@@ -1,0 +1,26 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            WITH inserted AS (\n                INSERT INTO supported_models (id, fingerprint, protocol, model)\n                VALUES ($1, $2, $3, $4)\n                ON CONFLICT (fingerprint) DO NOTHING\n                RETURNING id\n            )\n            SELECT id AS \"id!\" FROM inserted\n            UNION ALL\n            SELECT id FROM supported_models\n            WHERE fingerprint = $2 AND NOT EXISTS (SELECT 1 FROM inserted)\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!",
+        "type_info": "Uuid",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Jsonb"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "ed61e65d28175d4f6a1397294833b9fcd239f2197a3b0174f617969439f3cc46"
+}

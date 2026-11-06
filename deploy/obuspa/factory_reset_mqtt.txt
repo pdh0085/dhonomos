@@ -1,0 +1,39 @@
+# OB-USP-Agent factory reset database for the dev stack (MQTT 5 via Mosquitto).
+# The controller EndpointID must match the Dhonomos USP controller configuration.
+
+Device.LocalAgent.Controller.1.EndpointID "self::dhonomos-controller"
+Device.LocalAgent.Controller.1.Alias "dhonomos"
+Device.LocalAgent.Controller.1.Enable true
+Device.LocalAgent.Controller.1.AssignedRole "Device.LocalAgent.ControllerTrust.Role.1"
+Device.LocalAgent.Controller.1.PeriodicNotifInterval "86400"
+Device.LocalAgent.Controller.1.PeriodicNotifTime "0001-01-01T00:00:00Z"
+Device.LocalAgent.Controller.1.USPNotifRetryMinimumWaitInterval "5"
+Device.LocalAgent.Controller.1.USPNotifRetryIntervalMultiplier "2000"
+Device.LocalAgent.Controller.1.ControllerCode ""
+Device.LocalAgent.Controller.1.MTP.1.Alias "dhonomos-mqtt"
+Device.LocalAgent.Controller.1.MTP.1.Enable true
+Device.LocalAgent.Controller.1.MTP.1.Protocol "MQTT"
+Device.LocalAgent.Controller.1.MTP.1.MQTT.Reference "Device.MQTT.Client.1"
+Device.LocalAgent.Controller.1.MTP.1.MQTT.Topic "usp/controller/dhonomos"
+
+Device.LocalAgent.MTP.1.Alias "agent-mqtt"
+Device.LocalAgent.MTP.1.Enable true
+Device.LocalAgent.MTP.1.Protocol "MQTT"
+Device.LocalAgent.MTP.1.MQTT.ResponseTopicConfigured "usp/agent/obuspa-1"
+Device.LocalAgent.MTP.1.MQTT.Reference "Device.MQTT.Client.1"
+
+Device.MQTT.Client.1.Alias "broker"
+Device.MQTT.Client.1.Enable true
+Device.MQTT.Client.1.BrokerAddress "mosquitto"
+Device.MQTT.Client.1.BrokerPort "1883"
+Device.MQTT.Client.1.ProtocolVersion "5.0"
+Device.MQTT.Client.1.TransportProtocol "TCP/IP"
+Device.MQTT.Client.1.Username ""
+Device.MQTT.Client.1.Password ""
+Device.MQTT.Client.1.ClientID ""
+Device.MQTT.Client.1.KeepAliveTime "60"
+Device.MQTT.Client.1.ConnectRetryTime "5"
+Device.MQTT.Client.1.ConnectRetryIntervalMultiplier "2000"
+Device.MQTT.Client.1.ConnectRetryMaxInterval "30720"
+
+Internal.Reboot.Cause "LocalFactoryReset"

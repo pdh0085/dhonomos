@@ -1,0 +1,106 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT id, actor, action, target_type, target_id, detail, occurred_at\n            FROM audit_log\n            WHERE tenant_id = $1\n              AND ($3::text IS NULL OR actor = $3)\n              AND ($4::text IS NULL OR action LIKE $4)\n              AND ($5::text IS NULL OR target_id = $5)\n              AND ($6::bigint IS NULL OR id < $6)\n              AND ($7::timestamptz IS NULL OR occurred_at >= $7)\n            ORDER BY id DESC\n            LIMIT $2\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "audit_log",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "actor",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "audit_log",
+            "name": "actor"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "action",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "audit_log",
+            "name": "action"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "target_type",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "audit_log",
+            "name": "target_type"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "target_id",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "audit_log",
+            "name": "target_id"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "detail",
+        "type_info": "Jsonb",
+        "origin": {
+          "Table": {
+            "table": "audit_log",
+            "name": "detail"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "occurred_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "audit_log",
+            "name": "occurred_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Int8",
+        "Text",
+        "Text",
+        "Text",
+        "Int8",
+        "Timestamptz"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "19945c6ed943c30aba7e232bea2c4d6b48e6330d9cdc151c1f7c580d855a54e3"
+}

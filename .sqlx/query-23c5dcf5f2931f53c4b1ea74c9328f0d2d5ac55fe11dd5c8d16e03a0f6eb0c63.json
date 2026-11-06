@@ -1,0 +1,46 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT e.device_id AS \"id!\", count(*) AS \"n!\"\n            FROM events e JOIN devices d ON d.id = e.device_id\n            WHERE e.tenant_id = $1 AND e.kind = $2 AND e.detail @> $3\n              AND e.occurred_at > now() - make_interval(mins => $4::int)\n              AND d.status = 'active'\n              AND ($6::text IS NULL OR d.protocol = $6)\n              AND ($7::text IS NULL OR d.oui = $7)\n              AND ($8::text IS NULL OR d.product_class = $8)\n              AND (cardinality($9::text[]) = 0 OR d.software_version = ANY($9))\n              AND d.tags @> $10::text[]\n              AND (cardinality($11::uuid[]) = 0 OR d.id = ANY($11))\n              AND d.attributes @> $12::jsonb\n            GROUP BY e.device_id HAVING count(*) >= $5\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "events",
+            "name": "device_id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "n!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Jsonb",
+        "Int4",
+        "Int8",
+        "Text",
+        "Text",
+        "Text",
+        "TextArray",
+        "TextArray",
+        "UuidArray",
+        "Jsonb"
+      ]
+    },
+    "nullable": [
+      true,
+      null
+    ]
+  },
+  "hash": "23c5dcf5f2931f53c4b1ea74c9328f0d2d5ac55fe11dd5c8d16e03a0f6eb0c63"
+}

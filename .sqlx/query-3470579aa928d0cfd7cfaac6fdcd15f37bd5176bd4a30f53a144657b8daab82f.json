@@ -1,0 +1,53 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        UPDATE wg_members SET revoked_at = now(), revoked_reason = $2, updated_at = now()\n        WHERE user_id = $1 AND kind = 'client' AND revoked_at IS NULL\n        RETURNING id, network_id, name\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "network_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "network_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "name",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "name"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "3470579aa928d0cfd7cfaac6fdcd15f37bd5176bd4a30f53a144657b8daab82f"
+}

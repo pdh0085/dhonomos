@@ -1,0 +1,43 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT d.id, EXTRACT(EPOCH FROM now() - d.last_contact_at)::float8 / 60 AS \"minutes!\"\n            FROM devices d\n            WHERE d.tenant_id = $1 AND d.status = 'active'\n              AND d.last_contact_at < now() - make_interval(mins => $2::int)\n              AND ($3::text IS NULL OR d.protocol = $3)\n              AND ($4::text IS NULL OR d.oui = $4)\n              AND ($5::text IS NULL OR d.product_class = $5)\n              AND (cardinality($6::text[]) = 0 OR d.software_version = ANY($6))\n              AND d.tags @> $7::text[]\n              AND (cardinality($8::uuid[]) = 0 OR d.id = ANY($8))\n              AND d.attributes @> $9::jsonb\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "minutes!",
+        "type_info": "Float8",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Int4",
+        "Text",
+        "Text",
+        "Text",
+        "TextArray",
+        "TextArray",
+        "UuidArray",
+        "Jsonb"
+      ]
+    },
+    "nullable": [
+      false,
+      null
+    ]
+  },
+  "hash": "8986230f2d58f5da295e6d742f47ad0a6bbee7fff5df7d2079fe0fc5cc4ab817"
+}

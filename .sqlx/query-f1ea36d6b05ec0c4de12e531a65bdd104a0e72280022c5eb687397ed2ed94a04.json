@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT public_key FROM wg_members\n            WHERE id = $1 AND kind = 'device' AND revoked_at IS NULL FOR NO KEY UPDATE\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "public_key",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "public_key"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      true
+    ]
+  },
+  "hash": "f1ea36d6b05ec0c4de12e531a65bdd104a0e72280022c5eb687397ed2ed94a04"
+}

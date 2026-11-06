@@ -1,0 +1,40 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            WITH inserted AS (\n                INSERT INTO devices (id, tenant_id, protocol, endpoint_id, tags)\n                VALUES ($1, $2, 'usp', $3, $4)\n                ON CONFLICT (tenant_id, endpoint_id) WHERE protocol = 'usp' DO NOTHING\n                RETURNING id, status\n            )\n            SELECT id AS \"id!\", status AS \"status!\", true AS \"created!\" FROM inserted\n            UNION ALL\n            SELECT id, status, false FROM devices\n            WHERE tenant_id = $2 AND protocol = 'usp' AND endpoint_id = $3\n              AND NOT EXISTS (SELECT 1 FROM inserted)\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!",
+        "type_info": "Uuid",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 1,
+        "name": "status!",
+        "type_info": "Text",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 2,
+        "name": "created!",
+        "type_info": "Bool",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text",
+        "TextArray"
+      ]
+    },
+    "nullable": [
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "c2a63e9178c945327129fd75a34022b8990b04ebe853bffb5433df49ab30be03"
+}

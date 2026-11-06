@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE user_totp SET\n                ciphertext = pending_ciphertext, nonce = pending_nonce, key_id = pending_key_id,\n                enabled_at = now(), last_step = $3,\n                pending_ciphertext = NULL, pending_nonce = NULL, pending_key_id = NULL,\n                pending_at = NULL\n            WHERE user_id = $1 AND pending_ciphertext = $2\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Bytea",
+        "Int8"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "5a6b95953892d13860aa87f8140263f9f300643e8eed7a88b16d6997d2105b24"
+}

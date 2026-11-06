@@ -1,0 +1,89 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT c.device_id, c.kind, c.username, c.secret_ciphertext AS ciphertext, c.nonce, c.key_id\n            FROM device_credentials c JOIN devices d ON d.id = c.device_id\n            WHERE c.kind IN ('acs_auth', 'acs_auth_pending') AND c.username = $2 AND d.tenant_id = $1\n            ORDER BY c.kind = 'acs_auth' DESC, c.device_id\n            LIMIT 8\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "device_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "device_credentials",
+            "name": "device_id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "kind",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "device_credentials",
+            "name": "kind"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "username",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "device_credentials",
+            "name": "username"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "ciphertext",
+        "type_info": "Bytea",
+        "origin": {
+          "Table": {
+            "table": "device_credentials",
+            "name": "secret_ciphertext"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "nonce",
+        "type_info": "Bytea",
+        "origin": {
+          "Table": {
+            "table": "device_credentials",
+            "name": "nonce"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "key_id",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "device_credentials",
+            "name": "key_id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "b60e30f3737e107f794341a9130fdc97358b461697b10167f968a4137ee7ff03"
+}

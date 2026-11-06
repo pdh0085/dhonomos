@@ -1,0 +1,26 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT j.id FROM jobs j\n            WHERE j.state IN ('paused', 'cancelled')\n              AND EXISTS (SELECT 1 FROM job_devices jd\n                          WHERE jd.job_id = j.id AND jd.state IN ('dispatched', 'verifying'))\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "jobs",
+            "name": "id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "a01ae013e8fc96f14219e25b921c1cbac823d3f3e3d9e24856d46f7c39448f6c"
+}

@@ -1,0 +1,35 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT sp.member_id, sp.prefix::text AS \"prefix!\"\n            FROM wg_site_prefixes sp JOIN wg_members m ON m.id = sp.member_id\n            JOIN wg_networks n ON n.id = m.network_id\n            WHERE n.hub_id = $1 AND m.revoked_at IS NULL AND m.public_key IS NOT NULL\n            ORDER BY sp.prefix\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "member_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_site_prefixes",
+            "name": "member_id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "prefix!",
+        "type_info": "Text",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      null
+    ]
+  },
+  "hash": "e6d9d38d8ec0b19613d301073be162cabd7d496dabba08e96c09e20f8e2a97dd"
+}

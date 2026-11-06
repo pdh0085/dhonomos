@@ -1,0 +1,28 @@
+[package]
+name = "dhonomos-pki"
+description = "Dhonomos certificate authority for USP Controller Trust (US-08) and reloadable TLS server certificates"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+metrics.workspace = true
+rcgen.workspace = true
+ring.workspace = true
+rustls.workspace = true
+rustls-pki-types.workspace = true
+thiserror.workspace = true
+time.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+x509-parser.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+tokio-rustls.workspace = true
+
+[lints]
+workspace = true

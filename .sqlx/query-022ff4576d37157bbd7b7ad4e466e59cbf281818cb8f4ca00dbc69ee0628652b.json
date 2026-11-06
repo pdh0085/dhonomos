@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO audit_export (tenant_id, sink, last_id) VALUES ($1, $2, $3)\n            ON CONFLICT (tenant_id, sink)\n            DO UPDATE SET last_id = GREATEST(audit_export.last_id, EXCLUDED.last_id), updated_at = now()\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Int8"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "022ff4576d37157bbd7b7ad4e466e59cbf281818cb8f4ca00dbc69ee0628652b"
+}

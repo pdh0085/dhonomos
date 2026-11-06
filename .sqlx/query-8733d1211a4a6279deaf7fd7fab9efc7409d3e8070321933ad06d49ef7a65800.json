@@ -1,0 +1,136 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO usp_certificates (id, tenant_id, endpoint_id, fingerprint, from_csr,\n                                          revoked_at, revoked_by, revoke_reason)\n            VALUES ($1, $2, $3, $4, false, now(), $5, $6)\n            ON CONFLICT (tenant_id, fingerprint) DO NOTHING\n            RETURNING id, fingerprint, endpoint_id, device_id, serial, not_after,\n                      revoked_at AS \"revoked_at!\", revoked_by, revoke_reason,\n                      false AS \"known!\"\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "fingerprint",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "fingerprint"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "endpoint_id",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "endpoint_id"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "device_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "device_id"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "serial",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "serial"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "not_after",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "not_after"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "revoked_at!",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "revoked_at"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "revoked_by",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "revoked_by"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "revoke_reason",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "revoke_reason"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "known!",
+        "type_info": "Bool",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      null
+    ]
+  },
+  "hash": "8733d1211a4a6279deaf7fd7fab9efc7409d3e8070321933ad06d49ef7a65800"
+}

@@ -1,0 +1,1 @@
+Device.IP.Interface.[Name=="wan"&&Enable==true].IPv4Address.*.

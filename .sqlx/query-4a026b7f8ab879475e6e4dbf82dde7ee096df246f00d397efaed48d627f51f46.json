@@ -1,0 +1,55 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            WITH m AS (SELECT id FROM metric_names WHERE path = $2),\n            s AS (\n                SELECT s.ts, s.value FROM metric_samples s, m\n                WHERE s.device_id = $1 AND s.metric_id = m.id AND s.ts >= $3 AND s.ts < $4\n                UNION ALL\n                SELECT r.day::timestamp AT TIME ZONE 'UTC' + make_interval(secs => u.off), u.v\n                FROM metric_rollups r, m, unnest(r.offsets, r.vals) AS u(off, v)\n                WHERE r.device_id = $1 AND r.metric_id = m.id\n                  AND r.day >= ($3 AT TIME ZONE 'UTC')::date AND r.day <= ($4 AT TIME ZONE 'UTC')::date\n            )\n            SELECT date_bin(make_interval(secs => $5::bigint), ts, $3) AS \"ts!\",\n                   avg(value) AS \"avg!\", min(value) AS \"min!\", max(value) AS \"max!\",\n                   count(*) AS \"count!\"\n            FROM s WHERE ts >= $3 AND ts < $4\n            GROUP BY 1 ORDER BY 1\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "ts!",
+        "type_info": "Timestamptz",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 1,
+        "name": "avg!",
+        "type_info": "Float8",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 2,
+        "name": "min!",
+        "type_info": "Float8",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 3,
+        "name": "max!",
+        "type_info": "Float8",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 4,
+        "name": "count!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Timestamptz",
+        "Timestamptz",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "4a026b7f8ab879475e6e4dbf82dde7ee096df246f00d397efaed48d627f51f46"
+}

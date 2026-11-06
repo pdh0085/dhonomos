@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO alarm_rule_sets (tenant_id, yaml, updated_by) VALUES ($1, $2, $3)\n            ON CONFLICT (tenant_id) DO UPDATE\n            SET yaml = EXCLUDED.yaml, updated_by = EXCLUDED.updated_by, updated_at = now()\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "d94ac7aa05fd75ba7b85a5881de40cc282f71b8ab70f6450e7b3071b6f207a3d"
+}

@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO device_metrics (device_id, metric_id, last_ts, last_value)\n            SELECT DISTINCT ON (m) $1, m, t, v\n            FROM unnest($2::int[], $3::timestamptz[], $4::float8[]) AS s(m, t, v)\n            ORDER BY m, t DESC\n            ON CONFLICT (device_id, metric_id) DO UPDATE\n                SET last_ts = EXCLUDED.last_ts, last_value = EXCLUDED.last_value\n                WHERE device_metrics.last_ts <= EXCLUDED.last_ts\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Int4Array",
+        "TimestamptzArray",
+        "Float8Array"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "a4ee192f29985a065527a79d3cfcaa4450ad35f97c8ef97ae742d21f70d90b7c"
+}

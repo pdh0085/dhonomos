@@ -1,0 +1,18 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO preset_history (tenant_id, name, revision, enabled, definition, changed_by)\n            VALUES ($1, $2, $3, $4, NULL, $5)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Int4",
+        "Bool",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "232aca1487583b66c0ccb9be4906e61123324a7ee4ee244a9d14e579a2a113b5"
+}

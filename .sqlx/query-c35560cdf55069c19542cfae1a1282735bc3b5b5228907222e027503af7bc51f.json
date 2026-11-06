@@ -1,0 +1,37 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                SELECT w.id AS \"wanted!\", d.id AS \"actual!\"\n                FROM unnest($2::uuid[], $3::text[]) AS w(id, endpoint_id)\n                JOIN devices d ON d.tenant_id = $1 AND d.protocol = 'usp'\n                              AND d.endpoint_id = w.endpoint_id\n                ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "wanted!",
+        "type_info": "Uuid",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 1,
+        "name": "actual!",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "UuidArray",
+        "TextArray"
+      ]
+    },
+    "nullable": [
+      null,
+      false
+    ]
+  },
+  "hash": "c35560cdf55069c19542cfae1a1282735bc3b5b5228907222e027503af7bc51f"
+}

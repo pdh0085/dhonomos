@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT fingerprint FROM usp_certificates\n            WHERE tenant_id = $1 AND revoked_at IS NOT NULL\n              AND (not_after IS NULL OR not_after > now())\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "fingerprint",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "fingerprint"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "4be590d05810c6beb5457baf3fa5171b7be19a52cc95f0d4753615868282c049"
+}

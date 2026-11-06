@@ -1,0 +1,20 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE wg_networks SET name = COALESCE($3, name),\n                ipv4_prefix = COALESCE($4::text::cidr, ipv4_prefix),\n                listen_port = COALESCE($5, listen_port), mtu = COALESCE($6, mtu),\n                persistent_keepalive = COALESCE($7, persistent_keepalive), updated_at = now()\n            WHERE id = $1 AND tenant_id = $2\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text",
+        "Int4",
+        "Int4",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "11c11dc575cc577814e5b7f3143aac6a0c0b426f93d9c433e7678e0e1915b2ae"
+}

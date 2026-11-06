@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT (EXTRACT(EPOCH FROM (min(not_before) - now())) * 1000000)::bigint AS \"micros\"\n            FROM tasks\n            WHERE device_id = $1 AND state = 'pending' AND not_before > now()\n              AND (expires_at IS NULL OR expires_at > now())\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "micros",
+        "type_info": "Int8",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "e9d0475e8838ff030a27032bbb04ea1aee4239ac25f41d1ef8d5a34239cdbb07"
+}

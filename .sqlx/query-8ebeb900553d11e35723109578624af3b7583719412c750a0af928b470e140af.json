@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO runtime_settings (tenant_id, key, value, updated_by)\n            VALUES ($1, $2, $3, $4)\n            ON CONFLICT (tenant_id, key) DO UPDATE\n            SET value = EXCLUDED.value, updated_by = EXCLUDED.updated_by, updated_at = now()\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Jsonb",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "8ebeb900553d11e35723109578624af3b7583719412c750a0af928b470e140af"
+}

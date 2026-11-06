@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE wg_members SET device_state = $2, device_detail = $3,\n                device_checked_at = now(),\n                device_applied_hash = COALESCE($4, device_applied_hash)\n            WHERE id = $1 AND kind = 'device'\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "846b28e0fcd1419b06130467b3359dbdf2e65e803d29c92925ecd6b9fbc5554c"
+}

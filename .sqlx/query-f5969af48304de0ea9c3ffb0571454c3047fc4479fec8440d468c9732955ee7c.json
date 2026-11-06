@@ -1,0 +1,21 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO usp_certificates (id, tenant_id, device_id, endpoint_id, serial, fingerprint,\n                                          not_after, from_csr, issued_by)\n            VALUES ($1, $2, $3,\n                    (SELECT d.endpoint_id FROM devices d WHERE d.id = $3 AND d.protocol = 'usp'),\n                    $4, $5, $6, $7, $8)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text",
+        "Timestamptz",
+        "Bool",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "f5969af48304de0ea9c3ffb0571454c3047fc4479fec8440d468c9732955ee7c"
+}

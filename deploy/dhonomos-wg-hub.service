@@ -1,0 +1,46 @@
+# systemd unit: dhonomos-wg-hub, Dhonomos WireGuard hub (ADR-110).
+# Get hub state from Dhonomos server -> keep in sync: per network 1 WireGuard interface
+# (dwg<port>) + 1 routing table + rule; nftables table inet dhonomos_wg.
+# Install:
+# - binary -> /usr/local/bin/dhonomos-wg-hub
+# - hub token (POST /api/v1/wireguard/hubs/{id}/token) -> /etc/dhonomos/wg-hub.token, mode 0600
+# - settings -> /etc/dhonomos/wg-hub.env (see dhonomos-wg-hub.env.example)
+# Private key -> created in /var/lib/dhonomos-wg-hub on first start.
+#
+# Host needs:
+# - wireguard kernel module, load at boot: echo wireguard > /etc/modules-load.d/wireguard.conf
+# - net.ipv4.ip_forward=1 (99-dhonomos-wg-hub.conf in /etc/sysctl.d)
+# - nft program (package nftables)
+# - host firewall: allow forwarding between dwg+ interfaces + UDP to the hub ports
+#   of its networks.
+[Unit]
+Description=Dhonomos WireGuard hub
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+ExecStart=/usr/local/bin/dhonomos-wg-hub
+EnvironmentFile=-/etc/dhonomos/wg-hub.env
+Restart=always
+RestartSec=5
+User=root
+StateDirectory=dhonomos-wg-hub
+StateDirectoryMode=0700
+CapabilityBoundingSet=CAP_NET_ADMIN
+AmbientCapabilities=CAP_NET_ADMIN
+NoNewPrivileges=yes
+ProtectSystem=strict
+# rp_filter of dwg interfaces. ProtectKernelTunables -> read-only -> not used.
+ReadWritePaths=/proc/sys/net/ipv4/conf
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelModules=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_NETLINK AF_UNIX
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictRealtime=yes
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target

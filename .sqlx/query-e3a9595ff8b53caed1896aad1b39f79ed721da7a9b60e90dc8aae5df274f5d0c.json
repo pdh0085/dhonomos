@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT DISTINCT endpoint_id AS \"endpoint_id!\"\n            FROM usp_certificates\n            WHERE tenant_id = $1 AND revoked_at IS NULL AND endpoint_id IS NOT NULL\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "endpoint_id!",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "endpoint_id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      true
+    ]
+  },
+  "hash": "e3a9595ff8b53caed1896aad1b39f79ed721da7a9b60e90dc8aae5df274f5d0c"
+}

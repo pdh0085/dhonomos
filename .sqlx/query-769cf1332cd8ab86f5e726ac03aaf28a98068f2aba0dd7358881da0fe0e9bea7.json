@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE presets SET definition = $3 WHERE id = $1 AND definition = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Jsonb",
+        "Jsonb"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "769cf1332cd8ab86f5e726ac03aaf28a98068f2aba0dd7358881da0fe0e9bea7"
+}

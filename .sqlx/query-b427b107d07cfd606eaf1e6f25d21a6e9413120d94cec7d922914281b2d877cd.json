@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE devices SET xmpp_connected_at = NULL WHERE id = $1 AND xmpp_connected_at = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Timestamptz"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "b427b107d07cfd606eaf1e6f25d21a6e9413120d94cec7d922914281b2d877cd"
+}

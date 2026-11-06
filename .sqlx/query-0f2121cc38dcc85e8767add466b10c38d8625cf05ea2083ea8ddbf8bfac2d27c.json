@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE tasks SET payload = jsonb_set(payload, '{values}', COALESCE((\n                SELECT jsonb_agg(CASE WHEN v.elem -> 'secret' = 'true'::jsonb\n                                      THEN jsonb_set(v.elem, '{value}', '\"********\"'::jsonb)\n                                      ELSE v.elem END\n                                 ORDER BY v.idx)\n                FROM jsonb_array_elements(payload -> 'values') WITH ORDINALITY AS v(elem, idx)\n            ), '[]'::jsonb))\n            WHERE id = $1 AND jsonb_typeof(payload -> 'values') = 'array'\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "0f2121cc38dcc85e8767add466b10c38d8625cf05ea2083ea8ddbf8bfac2d27c"
+}

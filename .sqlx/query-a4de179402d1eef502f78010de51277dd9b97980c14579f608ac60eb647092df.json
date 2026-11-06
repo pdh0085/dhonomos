@@ -1,0 +1,40 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT endpoint_id AS \"eid!\", usp_ws_url AS \"url!\" FROM devices\n            WHERE tenant_id = $1 AND protocol = 'usp' AND status = 'active'\n              AND endpoint_id IS NOT NULL AND usp_ws_url IS NOT NULL\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "eid!",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "endpoint_id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "url!",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "usp_ws_url"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      true,
+      true
+    ]
+  },
+  "hash": "a4de179402d1eef502f78010de51277dd9b97980c14579f608ac60eb647092df"
+}

@@ -1,0 +1,20 @@
+{
+  "commit": "837572f",
+  "date": "2026-10-04T02:47:16Z",
+  "devices": 10000,
+  "load_average": "20.05",
+  "scenarios": {
+    "periodic": {
+      "errors": 0,
+      "inform_p50_ms": 7.9,
+      "inform_p99_ms": 202.7,
+      "throughput": 1498.5
+    },
+    "register": {
+      "errors": 0,
+      "inform_p50_ms": 21.3,
+      "inform_p99_ms": 440.3,
+      "throughput": 499.4
+    }
+  }
+}

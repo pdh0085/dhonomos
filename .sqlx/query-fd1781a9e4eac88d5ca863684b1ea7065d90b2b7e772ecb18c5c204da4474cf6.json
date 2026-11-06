@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM supported_models WHERE fingerprint = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "fd1781a9e4eac88d5ca863684b1ea7065d90b2b7e772ecb18c5c204da4474cf6"
+}

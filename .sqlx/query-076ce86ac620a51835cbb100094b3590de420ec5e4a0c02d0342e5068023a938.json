@@ -1,0 +1,53 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT id, psk_ciphertext AS \"ciphertext!\", psk_nonce AS \"nonce!\"\n            FROM wg_members\n            WHERE psk_ciphertext IS NOT NULL AND ($1::uuid IS NULL OR id > $1)\n            ORDER BY id LIMIT $2\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "ciphertext!",
+        "type_info": "Bytea",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "psk_ciphertext"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "nonce!",
+        "type_info": "Bytea",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "psk_nonce"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      true
+    ]
+  },
+  "hash": "076ce86ac620a51835cbb100094b3590de420ec5e4a0c02d0342e5068023a938"
+}

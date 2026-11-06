@@ -1,0 +1,44 @@
+# OB-USP-Agent factory reset database: MQTT 5 against Dhonomos's embedded broker (ADR-093).
+# Run with --network host against `dhonomos --usp-mqtt-broker-listen 127.0.0.1:1883
+# --usp-mqtt-broker-username cpe --usp-mqtt-broker-password <password>`; put the password below.
+# The Agent's topic is left empty: the broker names it in the CONNACK (Response Information,
+# which RequestResponseInfo asks for, and the `subscribe-topic` user property). Set
+# ResponseTopicConfigured to usp/agent/<EndpointID> instead to give it one by hand.
+
+Device.LocalAgent.Controller.1.EndpointID "self::dhonomos-controller"
+Device.LocalAgent.Controller.1.Alias "dhonomos"
+Device.LocalAgent.Controller.1.Enable true
+Device.LocalAgent.Controller.1.AssignedRole "Device.LocalAgent.ControllerTrust.Role.1"
+Device.LocalAgent.Controller.1.PeriodicNotifInterval "86400"
+Device.LocalAgent.Controller.1.PeriodicNotifTime "0001-01-01T00:00:00Z"
+Device.LocalAgent.Controller.1.USPNotifRetryMinimumWaitInterval "5"
+Device.LocalAgent.Controller.1.USPNotifRetryIntervalMultiplier "2000"
+Device.LocalAgent.Controller.1.ControllerCode ""
+Device.LocalAgent.Controller.1.MTP.1.Alias "dhonomos-mqtt"
+Device.LocalAgent.Controller.1.MTP.1.Enable true
+Device.LocalAgent.Controller.1.MTP.1.Protocol "MQTT"
+Device.LocalAgent.Controller.1.MTP.1.MQTT.Reference "Device.MQTT.Client.1"
+Device.LocalAgent.Controller.1.MTP.1.MQTT.Topic "usp/controller/dhonomos"
+
+Device.LocalAgent.MTP.1.Alias "agent-mqtt"
+Device.LocalAgent.MTP.1.Enable true
+Device.LocalAgent.MTP.1.Protocol "MQTT"
+Device.LocalAgent.MTP.1.MQTT.ResponseTopicConfigured ""
+Device.LocalAgent.MTP.1.MQTT.Reference "Device.MQTT.Client.1"
+
+Device.MQTT.Client.1.Alias "dhonomos"
+Device.MQTT.Client.1.Enable true
+Device.MQTT.Client.1.BrokerAddress "127.0.0.1"
+Device.MQTT.Client.1.BrokerPort "1883"
+Device.MQTT.Client.1.ProtocolVersion "5.0"
+Device.MQTT.Client.1.TransportProtocol "TCP/IP"
+Device.MQTT.Client.1.Username "cpe"
+Device.MQTT.Client.1.Password "PASSWORD"
+Device.MQTT.Client.1.ClientID ""
+Device.MQTT.Client.1.RequestResponseInfo true
+Device.MQTT.Client.1.KeepAliveTime "60"
+Device.MQTT.Client.1.ConnectRetryTime "5"
+Device.MQTT.Client.1.ConnectRetryIntervalMultiplier "2000"
+Device.MQTT.Client.1.ConnectRetryMaxInterval "60"
+
+Internal.Reboot.Cause "LocalFactoryReset"

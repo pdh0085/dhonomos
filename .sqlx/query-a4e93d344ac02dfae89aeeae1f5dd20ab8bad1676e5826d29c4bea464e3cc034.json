@@ -1,0 +1,79 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT d.id, d.status,\n                   d.oui AS \"oui!\", d.product_class, d.serial_number AS \"serial_number!\"\n            FROM devices d\n            JOIN unnest($2::text[], $3::text[], $4::text[]) AS w(oui, product_class, serial_number)\n              ON d.oui = w.oui AND d.product_class = w.product_class\n             AND d.serial_number = w.serial_number\n            WHERE d.tenant_id = $1 AND d.protocol = 'cwmp'\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "status",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "status"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "oui!",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "oui"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "product_class",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "product_class"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "serial_number!",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "serial_number"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "TextArray",
+        "TextArray",
+        "TextArray"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      false,
+      true
+    ]
+  },
+  "hash": "a4e93d344ac02dfae89aeeae1f5dd20ab8bad1676e5826d29c4bea464e3cc034"
+}

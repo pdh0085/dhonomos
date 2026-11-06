@@ -1,0 +1,47 @@
+[package]
+name = "dhonomos"
+description = "Dhonomos server: CWMP ACS and USP Controller"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+async-trait.workspace = true
+opentelemetry.workspace = true
+opentelemetry_sdk.workspace = true
+opentelemetry-otlp.workspace = true
+opentelemetry-http.workspace = true
+tracing-opentelemetry.workspace = true
+anyhow.workspace = true
+axum.workspace = true
+clap = { workspace = true, features = ["string"] }
+dhonomos-common.workspace = true
+getrandom.workspace = true
+metrics-exporter-prometheus.workspace = true
+dhonomos-api.workspace = true
+dhonomos-core.workspace = true
+dhonomos-cwmp-server.workspace = true
+dhonomos-jobs.workspace = true
+dhonomos-pki.workspace = true
+tokio-rustls.workspace = true
+dhonomos-store.workspace = true
+dhonomos-wireguard.workspace = true
+dhonomos-usp-mtp.workspace = true
+dhonomos-xmpp.workspace = true
+serde_json.workspace = true
+time.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+[dev-dependencies]
+rcgen.workspace = true
+rustls.workspace = true
+rustls-pki-types.workspace = true
+testcontainers-modules.workspace = true
+
+[lints]
+workspace = true

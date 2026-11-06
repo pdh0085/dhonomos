@@ -1,0 +1,24 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT ipv4_prefix::text AS \"prefix!\" FROM wg_networks\n        WHERE id = $1 AND tenant_id = $2 FOR NO KEY UPDATE\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "prefix!",
+        "type_info": "Text",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "5f56ebca2444543128affc1c54070b78a928f389aed67ff05462be541c25b666"
+}

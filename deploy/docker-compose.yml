@@ -1,0 +1,69 @@
+# Dhonomos + PostgreSQL (+ optional MQTT broker with auth, for USP).
+#
+#   cp deploy/dhonomos.env.example deploy/dhonomos.env   # then edit the secrets
+#   docker compose -f deploy/docker-compose.yml up -d
+#   # with USP over MQTT:  --profile usp
+#
+# UI/API: http://127.0.0.1:8080 on host (login admin / DHONOMOS_ADMIN_PASSWORD).
+# API: no own TLS, loopback only -> for other users put a TLS reverse proxy in front
+# + set DHONOMOS_SECURE_COOKIES=true (docs/guide/install.md).
+name: dhonomos
+
+services:
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dhonomos
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/dhonomos.env}
+      POSTGRES_DB: dhonomos
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dhonomos"]
+      interval: 5s
+      retries: 20
+
+  dhonomos:
+    image: ${DHONOMOS_IMAGE:-dhonomos:dev}
+    restart: unless-stopped
+    depends_on:
+      postgres: { condition: service_healthy }
+    env_file: dhonomos.env
+    environment:
+      DHONOMOS_DATABASE_URL: postgres://dhonomos:${POSTGRES_PASSWORD}@postgres:5432/dhonomos
+      DHONOMOS_ACS_LISTEN: "[::]:7547"
+      DHONOMOS_API_LISTEN: "[::]:8080"
+      DHONOMOS_FILES_LISTEN: "[::]:7548"
+    ports:
+      - "7547:7547"     # CWMP ACS (TLS proxy in front or DHONOMOS_ACS_TLS_*)
+      - "7548:7548"     # file server (downloads, uploads, BulkData)
+      - "127.0.0.1:8080:8080"   # API + web UI -> only via TLS reverse proxy
+    volumes:
+      - files:/var/lib/dhonomos/files
+      # HTTPS webhooks: image has no own CA bundle.
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+
+  mosquitto:
+    profiles: [usp]
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    entrypoint: ["sh", "/mosquitto/config/init-dynsec.sh"]
+    environment:
+      # 2 accounts: admin -> manages Agent accounts; Controller -> only sub/pub USP.
+      DYNSEC_ADMIN_USERNAME: dhonomos-admin
+      DYNSEC_ADMIN_PASSWORD: ${MQTT_ADMIN_PASSWORD:?set MQTT_ADMIN_PASSWORD in deploy/dhonomos.env}
+      DYNSEC_CONTROLLER_USERNAME: dhonomos-controller
+      DYNSEC_CONTROLLER_PASSWORD: ${MQTT_CONTROLLER_PASSWORD:?set MQTT_CONTROLLER_PASSWORD in deploy/dhonomos.env}
+    # Plain MQTT, loopback only. Dhonomos -> broker via compose network.
+    # Agents on the network -> add TLS listener (8883) in mosquitto/dynsec.conf, publish that.
+    # Passwords must not cross the network in clear text.
+    ports: ["127.0.0.1:1883:1883"]
+    volumes:
+      - ./mosquitto/dynsec.conf:/mosquitto/config/dynsec.conf:ro
+      - ./mosquitto/init-dynsec.sh:/mosquitto/config/init-dynsec.sh:ro
+      - mosquitto:/mosquitto/data
+
+volumes:
+  pgdata:
+  files:
+  mosquitto:

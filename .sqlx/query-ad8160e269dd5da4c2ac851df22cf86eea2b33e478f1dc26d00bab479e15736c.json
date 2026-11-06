@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE wg_members m SET revoked_at = now(), revoked_reason = $3, updated_at = now()\n            FROM wg_networks n\n            WHERE m.id = $1 AND n.id = m.network_id AND n.tenant_id = $2 AND m.revoked_at IS NULL\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "ad8160e269dd5da4c2ac851df22cf86eea2b33e478f1dc26d00bab479e15736c"
+}

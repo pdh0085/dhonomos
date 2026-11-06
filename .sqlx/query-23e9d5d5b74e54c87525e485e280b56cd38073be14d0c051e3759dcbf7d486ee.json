@@ -1,0 +1,76 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT m.id, m.fingerprint, m.protocol, m.model, m.created_at\n            FROM devices d JOIN supported_models m ON m.id = d.supported_model_id\n            WHERE d.id = $1\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "supported_models",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "fingerprint",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "supported_models",
+            "name": "fingerprint"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "protocol",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "supported_models",
+            "name": "protocol"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "model",
+        "type_info": "Jsonb",
+        "origin": {
+          "Table": {
+            "table": "supported_models",
+            "name": "model"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "created_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "supported_models",
+            "name": "created_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "23e9d5d5b74e54c87525e485e280b56cd38073be14d0c051e3759dcbf7d486ee"
+}

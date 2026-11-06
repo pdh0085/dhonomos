@@ -1,0 +1,36 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT severity, count(*) AS \"n!\" FROM alarms\n            WHERE tenant_id = $1 AND state = 'active'\n              AND ($2::jsonb IS NULL OR device_id IN (\n                  SELECT d.id FROM devices d WHERE d.tenant_id = $1 AND device_in_scope(d, $2)))\n            GROUP BY severity\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "severity",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "severity"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "n!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Jsonb"
+      ]
+    },
+    "nullable": [
+      false,
+      null
+    ]
+  },
+  "hash": "60cde4ba7d689951777a6969304b3af98ba77b6bb7de7d7109051f7d0a766281"
+}

@@ -1,0 +1,151 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT c.id, c.device_id AS \"device_id!\", c.serial AS \"serial!\", c.fingerprint,\n                   c.not_after AS \"not_after!\", c.from_csr, c.issued_by, c.issued_at,\n                   c.revoked_at, c.revoked_by, c.revoke_reason\n            FROM usp_certificates c JOIN devices d ON d.id = c.device_id\n            WHERE c.tenant_id = $1 AND c.revoked_at IS NULL AND c.not_after > now()\n              AND c.not_after < now() + make_interval(days => $2)\n              AND device_in_scope(d, $3)\n              -- A newer live certificate of the same device replaces it.\n              AND NOT EXISTS (\n                  SELECT 1 FROM usp_certificates n\n                  WHERE n.device_id = c.device_id AND n.revoked_at IS NULL\n                    AND n.not_after > c.not_after)\n            ORDER BY c.not_after LIMIT $4\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "device_id!",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "device_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "serial!",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "serial"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "fingerprint",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "fingerprint"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "not_after!",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "not_after"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "from_csr",
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "from_csr"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "issued_by",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "issued_by"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "issued_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "issued_at"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "revoked_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "revoked_at"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "revoked_by",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "revoked_by"
+          }
+        }
+      },
+      {
+        "ordinal": 10,
+        "name": "revoke_reason",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "revoke_reason"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Int4",
+        "Jsonb",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "e9873e197fc723ec1f9fcf73b00b01819709e589e6a258e17056e1121917ee6a"
+}

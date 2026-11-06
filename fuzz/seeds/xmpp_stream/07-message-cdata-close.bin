@@ -1,0 +1,2 @@
+<?xml version='1.0'?><stream:stream to='acs.example.net' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0'><message to="x@y/z"><body>a &amp; b &#65; <![CDATA[<c>]]></body></message>  
+ </stream:stream>

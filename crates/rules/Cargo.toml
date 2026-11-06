@@ -1,0 +1,17 @@
+[package]
+name = "dhonomos-rules"
+description = "Sandboxed Rune provisioning scripts"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+rune.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+
+[lints]
+workspace = true

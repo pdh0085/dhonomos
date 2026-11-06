@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT h.id FROM wg_hubs h\n        WHERE h.id IN (SELECT n.hub_id FROM wg_members m JOIN wg_networks n ON n.id = m.network_id\n                       WHERE m.user_id = $1 AND m.kind = 'client' AND m.revoked_at IS NULL)\n        ORDER BY h.id FOR NO KEY UPDATE\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "fc9c745d8584f6262670961e42eb2ccead07a9e4c564b3837f1f4d40578443d9"
+}

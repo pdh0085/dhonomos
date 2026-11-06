@@ -1,0 +1,36 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT software_version AS \"version!\", count(*) AS \"n!\" FROM devices d\n            WHERE tenant_id = $1 AND status = 'active' AND software_version IS NOT NULL\n              AND device_in_scope(d, $2)\n            GROUP BY 1 ORDER BY 2 DESC, 1 LIMIT 8\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "version!",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "software_version"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "n!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Jsonb"
+      ]
+    },
+    "nullable": [
+      true,
+      null
+    ]
+  },
+  "hash": "d1c1a36562b500accf41509f764ce1d36c86259997cc31722b7226d06bc2cb32"
+}

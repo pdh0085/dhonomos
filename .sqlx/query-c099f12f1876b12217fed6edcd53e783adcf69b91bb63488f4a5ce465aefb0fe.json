@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                UPDATE job_devices jd SET state = 'succeeded', finished_at = now()\n                FROM devices d\n                WHERE jd.job_id = $1 AND jd.state = 'verifying' AND d.id = jd.device_id\n                  AND d.software_version = $2\n                ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "c099f12f1876b12217fed6edcd53e783adcf69b91bb63488f4a5ce465aefb0fe"
+}

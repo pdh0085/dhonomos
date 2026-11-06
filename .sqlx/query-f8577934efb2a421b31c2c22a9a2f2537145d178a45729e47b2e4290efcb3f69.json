@@ -1,0 +1,347 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT id, tenant_id, protocol, oui, product_class, serial_number, endpoint_id,\n                   manufacturer, model_name, software_version, hardware_version, data_model,\n                   connection_request_url, cwmp_version, status, tags, first_seen_at,\n                   last_contact_at, last_boot_at, host(last_remote_addr) AS last_remote_addr, attributes, usp_ws_url, xmpp_connected_at,\n                   udp_cr_address, udp_cr_seen_at, last_wake_at, last_wake_method,\n                   last_wake_outcome\n            FROM devices WHERE id = $1\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "tenant_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "tenant_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "protocol",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "protocol"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "oui",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "oui"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "product_class",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "product_class"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "serial_number",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "serial_number"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "endpoint_id",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "endpoint_id"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "manufacturer",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "manufacturer"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "model_name",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "model_name"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "software_version",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "software_version"
+          }
+        }
+      },
+      {
+        "ordinal": 10,
+        "name": "hardware_version",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "hardware_version"
+          }
+        }
+      },
+      {
+        "ordinal": 11,
+        "name": "data_model",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "data_model"
+          }
+        }
+      },
+      {
+        "ordinal": 12,
+        "name": "connection_request_url",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "connection_request_url"
+          }
+        }
+      },
+      {
+        "ordinal": 13,
+        "name": "cwmp_version",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "cwmp_version"
+          }
+        }
+      },
+      {
+        "ordinal": 14,
+        "name": "status",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "status"
+          }
+        }
+      },
+      {
+        "ordinal": 15,
+        "name": "tags",
+        "type_info": "TextArray",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "tags"
+          }
+        }
+      },
+      {
+        "ordinal": 16,
+        "name": "first_seen_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "first_seen_at"
+          }
+        }
+      },
+      {
+        "ordinal": 17,
+        "name": "last_contact_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "last_contact_at"
+          }
+        }
+      },
+      {
+        "ordinal": 18,
+        "name": "last_boot_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "last_boot_at"
+          }
+        }
+      },
+      {
+        "ordinal": 19,
+        "name": "last_remote_addr",
+        "type_info": "Text",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 20,
+        "name": "attributes",
+        "type_info": "Jsonb",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "attributes"
+          }
+        }
+      },
+      {
+        "ordinal": 21,
+        "name": "usp_ws_url",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "usp_ws_url"
+          }
+        }
+      },
+      {
+        "ordinal": 22,
+        "name": "xmpp_connected_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "xmpp_connected_at"
+          }
+        }
+      },
+      {
+        "ordinal": 23,
+        "name": "udp_cr_address",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "udp_cr_address"
+          }
+        }
+      },
+      {
+        "ordinal": 24,
+        "name": "udp_cr_seen_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "udp_cr_seen_at"
+          }
+        }
+      },
+      {
+        "ordinal": 25,
+        "name": "last_wake_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "last_wake_at"
+          }
+        }
+      },
+      {
+        "ordinal": 26,
+        "name": "last_wake_method",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "last_wake_method"
+          }
+        }
+      },
+      {
+        "ordinal": 27,
+        "name": "last_wake_outcome",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "last_wake_outcome"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      null,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "f8577934efb2a421b31c2c22a9a2f2537145d178a45729e47b2e4290efcb3f69"
+}

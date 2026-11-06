@@ -1,0 +1,26 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT c.relname AS \"name!\" FROM pg_inherits i\n            JOIN pg_class c ON c.oid = i.inhrelid\n            JOIN pg_class p ON p.oid = i.inhparent\n            WHERE p.relname = 'metric_samples'\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "name!",
+        "type_info": "Name",
+        "origin": {
+          "Table": {
+            "table": "pg_class",
+            "name": "relname"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "bdc2f3011a52152a694bb433babccd4ed3fdc23fb42964b773c2d8ef59103191"
+}

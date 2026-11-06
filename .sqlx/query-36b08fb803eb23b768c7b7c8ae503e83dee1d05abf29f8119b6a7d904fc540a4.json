@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT listen_port FROM wg_networks WHERE hub_id = $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "listen_port",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "wg_networks",
+            "name": "listen_port"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "36b08fb803eb23b768c7b7c8ae503e83dee1d05abf29f8119b6a7d904fc540a4"
+}

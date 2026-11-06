@@ -1,0 +1,30 @@
+[package]
+name = "dhonomos-usp-controller"
+description = "USP Controller logic: correlation, onboarding, subscriptions"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+bytes.workspace = true
+getrandom.workspace = true
+metrics.workspace = true
+dhonomos-usp-mtp.workspace = true
+dhonomos-usp-proto.workspace = true
+prost.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+bytes.workspace = true
+axum.workspace = true
+futures-util = { workspace = true, features = ["sink"] }
+tokio-tungstenite.workspace = true
+tracing-subscriber.workspace = true
+
+[lints]
+workspace = true

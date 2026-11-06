@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM metric_rollups WHERE day < $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Date"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "46f662fe58517ddb26458f3c9f2d8ddf0bc3038bcd394eccbb2b76498b90781c"
+}

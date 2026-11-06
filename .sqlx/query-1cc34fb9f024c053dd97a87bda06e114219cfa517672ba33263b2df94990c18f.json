@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE wg_hubs SET last_seen_at = now(), last_seen_ip = $2::text::inet,\n                hub_version = $3\n            WHERE id = $1\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "1cc34fb9f024c053dd97a87bda06e114219cfa517672ba33263b2df94990c18f"
+}

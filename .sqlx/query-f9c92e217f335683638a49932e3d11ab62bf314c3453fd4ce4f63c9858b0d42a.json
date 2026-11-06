@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE devices SET\n                tags = COALESCE($3, tags),\n                attributes = CASE WHEN $4::jsonb IS NULL THEN attributes\n                                  ELSE jsonb_strip_nulls(attributes || $4) END\n            WHERE id = $1 AND tenant_id = $2\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "TextArray",
+        "Jsonb"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "f9c92e217f335683638a49932e3d11ab62bf314c3453fd4ce4f63c9858b0d42a"
+}

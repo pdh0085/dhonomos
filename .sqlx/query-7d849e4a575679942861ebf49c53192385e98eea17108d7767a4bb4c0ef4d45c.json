@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE job_devices jd SET state = 'cancelled', finished_at = now()\n            FROM tasks t\n            WHERE jd.job_id = $1 AND jd.state = 'dispatched' AND t.id = jd.task_id\n              AND t.state = 'cancelled'\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "7d849e4a575679942861ebf49c53192385e98eea17108d7767a4bb4c0ef4d45c"
+}

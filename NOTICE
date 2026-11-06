@@ -1,0 +1,19 @@
+Dhonomos
+Copyright 2026 Lightspeed International Co. and Donghyun Park
+
+Created by Donghyun Park at Lightspeed International Co. (Taiwan),
+and released as open source with the company's permission.
+See AUTHORS for the people who wrote it.
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product includes files from the Broadband Forum, redistributed under the
+BSD 3-Clause License. The original copyright and license headers are retained
+in each file:
+
+  proto/usp-msg-1-5.proto, proto/usp-record-1-5.proto
+    Copyright (c) 2017-2025, Broadband Forum
+  schemas/*.xml, schemas/*.xsd
+    Copyright (c) Broadband Forum and contributors as stated in each file
+
+See proto/README.md and schemas/README.md for sources and checksums.

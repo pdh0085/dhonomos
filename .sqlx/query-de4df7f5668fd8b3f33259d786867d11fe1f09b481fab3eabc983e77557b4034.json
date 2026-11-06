@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                DELETE FROM tasks WHERE id IN (\n                    SELECT id FROM tasks\n                    WHERE state IN ('succeeded', 'failed', 'cancelled', 'expired')\n                      AND finished_at < $1\n                      -- `once` presets remember that they ran through their task.\n                      AND (idempotency_key IS NULL OR idempotency_key NOT LIKE 'preset-once:%')\n                    LIMIT $2\n                )\n                ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Timestamptz",
+        "Int8"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "de4df7f5668fd8b3f33259d786867d11fe1f09b481fab3eabc983e77557b4034"
+}

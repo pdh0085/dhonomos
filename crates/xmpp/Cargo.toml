@@ -1,0 +1,36 @@
+[package]
+name = "dhonomos-xmpp"
+description = "Built-in XMPP server for TR-069 Annex K Connection Requests (ADR-104)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+async-trait.workspace = true
+base64.workspace = true
+bytes.workspace = true
+dhonomos-common.workspace = true
+dhonomos-pki.workspace = true
+getrandom.workspace = true
+metrics.workspace = true
+quick-xml.workspace = true
+ring.workspace = true
+rustls.workspace = true
+socket2.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tokio-rustls.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+rcgen.workspace = true
+rustls.workspace = true
+rustls-pki-types.workspace = true
+tokio-rustls.workspace = true
+tracing-subscriber.workspace = true
+
+[lints]
+workspace = true

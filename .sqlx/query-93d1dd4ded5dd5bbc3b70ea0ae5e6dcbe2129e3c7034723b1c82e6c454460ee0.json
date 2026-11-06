@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                DELETE FROM events WHERE id IN (\n                    SELECT id FROM events WHERE occurred_at < $1 LIMIT $2\n                )\n                ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Timestamptz",
+        "Int8"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "93d1dd4ded5dd5bbc3b70ea0ae5e6dcbe2129e3c7034723b1c82e6c454460ee0"
+}

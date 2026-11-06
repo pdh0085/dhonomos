@@ -1,0 +1,21 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO wg_networks (id, tenant_id, hub_id, name, ipv4_prefix, listen_port, mtu,\n                                     persistent_keepalive)\n            VALUES ($1, $2, $3, $4, $5::text::cidr, $6, $7, $8)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text",
+        "Int4",
+        "Int4",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "4bc03a8c77af45048c0e7588f7f995e8d7c12557361705f9042b066b0c3264b3"
+}

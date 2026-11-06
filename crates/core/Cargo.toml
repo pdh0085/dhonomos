@@ -1,0 +1,67 @@
+[package]
+name = "dhonomos-core"
+description = "Device registry, task kinds and protocol backends"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+bytes.workspace = true
+http-body-util.workspace = true
+hyper.workspace = true
+hyper-util.workspace = true
+rustls.workspace = true
+rustls-native-certs.workspace = true
+rustls-pki-types.workspace = true
+tokio-rustls.workspace = true
+dhonomos-common.workspace = true
+dhonomos-cwmp-codec.workspace = true
+metrics.workspace = true
+hmac.workspace = true
+sha2.workspace = true
+dhonomos-cwmp-server.workspace = true
+dhonomos-cwmp-session.workspace = true
+dhonomos-rules.workspace = true
+dhonomos-store.workspace = true
+dhonomos-usp-controller.workspace = true
+dhonomos-usp-mtp.workspace = true
+dhonomos-usp-proto.workspace = true
+dhonomos-wireguard.workspace = true
+dhonomos-xmpp.workspace = true
+async-trait.workspace = true
+tokio.workspace = true
+serde.workspace = true
+serde-saphyr.workspace = true
+serde_json.workspace = true
+regex.workspace = true
+ring.workspace = true
+base64.workspace = true
+thiserror.workspace = true
+time.workspace = true
+tracing.workspace = true
+uuid.workspace = true
+zeroize.workspace = true
+
+[dev-dependencies]
+axum.workspace = true
+rcgen.workspace = true
+rumqttc.workspace = true
+futures-util = { workspace = true, features = ["sink"] }
+tokio-tungstenite.workspace = true
+dhonomos-pki.workspace = true
+hmac.workspace = true
+sha1.workspace = true
+prost.workspace = true
+bytes.workspace = true
+http-body-util.workspace = true
+hyper.workspace = true
+hyper-util.workspace = true
+testcontainers-modules.workspace = true
+tokio.workspace = true
+sqlx.workspace = true
+
+[lints]
+workspace = true

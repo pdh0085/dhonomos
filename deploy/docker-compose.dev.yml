@@ -1,0 +1,69 @@
+# Development stack for Dhonomos.
+#   Infra only:        docker compose -f deploy/docker-compose.dev.yml up -d
+#   + USP agent:       ... --profile usp up -d
+#   + CWMP simulator:  ... --profile cwmp up -d   (needs ACS listening on the host)
+name: dhonomos-dev
+
+networks:
+  dhonomos:
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+        - subnet: fd00:72:6d73::/64
+
+volumes:
+  pgdata:
+
+services:
+  postgres:
+    image: timescale/timescaledb-ha:pg17
+    environment:
+      POSTGRES_USER: dhonomos
+      POSTGRES_PASSWORD: dhonomos
+      POSTGRES_DB: dhonomos
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: [pgdata:/home/postgres/pgdata]
+    networks: [dhonomos]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "dhonomos"]
+      interval: 5s
+      retries: 20
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports: ["127.0.0.1:1883:1883"]
+    volumes: ["./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro"]
+    networks: [dhonomos]
+
+  # Broker with per-Agent accounts (profile auth): dhonomos --usp-mqtt-port 1884 --usp-dynsec ...
+  mosquitto-auth:
+    profiles: [auth]
+    image: eclipse-mosquitto:2
+    ports: ["127.0.0.1:1884:1883"]
+    entrypoint: ["sh", "/mosquitto/config/init-dynsec.sh"]
+    environment:
+      DYNSEC_ADMIN_USERNAME: admin
+      DYNSEC_ADMIN_PASSWORD: dev-admin
+    volumes:
+      - ./mosquitto/dynsec.conf:/mosquitto/config/dynsec.conf:ro
+      - ./mosquitto/init-dynsec.sh:/mosquitto/config/init-dynsec.sh:ro
+    networks: [dhonomos]
+
+  obuspa:
+    profiles: [usp]
+    build: ./obuspa
+    image: dhonomos-dev/obuspa:v11.0.7
+    init: true
+    command: ["-p", "-v4", "-r", "/etc/obuspa/factory_reset.txt", "-f", "/tmp/usp.db"]
+    volumes: ["./obuspa/factory_reset_mqtt.txt:/etc/obuspa/factory_reset.txt:ro"]
+    depends_on: [mosquitto]
+    networks: [dhonomos]
+
+  cwmp-sim:
+    profiles: [cwmp]
+    build: ./genieacs-sim
+    image: dhonomos-dev/genieacs-sim
+    command: ["--acs-url", "${RMS_ACS_URL:-http://host.docker.internal:7547/}", "--processes", "1"]
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    networks: [dhonomos]

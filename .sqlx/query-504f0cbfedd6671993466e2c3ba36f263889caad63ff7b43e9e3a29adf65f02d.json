@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT s.prefix::text AS \"prefix!\" FROM (\n                SELECT DISTINCT sp.prefix\n                FROM wg_site_prefixes sp JOIN wg_members m ON m.id = sp.member_id\n                WHERE m.network_id = $1 AND m.revoked_at IS NULL\n            ) s ORDER BY s.prefix\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "prefix!",
+        "type_info": "Text",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "504f0cbfedd6671993466e2c3ba36f263889caad63ff7b43e9e3a29adf65f02d"
+}

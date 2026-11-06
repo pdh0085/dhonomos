@@ -1,0 +1,125 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE alarm_silences\n            SET ends_at = GREATEST(starts_at + interval '1 microsecond', LEAST(ends_at, now()))\n            WHERE id = $1 AND tenant_id = $2\n            RETURNING id, tenant_id, rule, devices, starts_at, ends_at, comment, created_by,\n                      created_at\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "alarm_silences",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "tenant_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "alarm_silences",
+            "name": "tenant_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "rule",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarm_silences",
+            "name": "rule"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "devices",
+        "type_info": "Jsonb",
+        "origin": {
+          "Table": {
+            "table": "alarm_silences",
+            "name": "devices"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "starts_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "alarm_silences",
+            "name": "starts_at"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "ends_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "alarm_silences",
+            "name": "ends_at"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "comment",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarm_silences",
+            "name": "comment"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "created_by",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarm_silences",
+            "name": "created_by"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "created_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "alarm_silences",
+            "name": "created_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false
+    ]
+  },
+  "hash": "010f34afc2c9e576c7359a770582aaaf217fd9ea76c22f7ed8edc883a55227a8"
+}

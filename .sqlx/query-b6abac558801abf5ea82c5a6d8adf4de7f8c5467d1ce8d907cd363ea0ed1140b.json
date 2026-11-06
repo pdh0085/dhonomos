@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE devices d\n            SET attributes = jsonb_strip_nulls(d.attributes || u.patch)\n            FROM unnest($2::uuid[], $3::jsonb[]) AS u(id, patch)\n            WHERE d.id = u.id AND d.tenant_id = $1\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "UuidArray",
+        "JsonbArray"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "b6abac558801abf5ea82c5a6d8adf4de7f8c5467d1ce8d907cd363ea0ed1140b"
+}

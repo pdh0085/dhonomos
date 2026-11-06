@@ -1,0 +1,163 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT h.id, h.name, h.endpoint_host, h.public_key, h.created_at, h.updated_at,\n                   (SELECT count(*) FROM wg_networks n WHERE n.hub_id = h.id) AS \"networks!\",\n                   h.token_prefix, h.token_created_at, h.last_seen_at,\n                   host(h.last_seen_ip) AS last_seen_ip, h.hub_version, h.state_revision\n            FROM wg_hubs h WHERE h.tenant_id = $1 AND h.id = $2\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "name",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "endpoint_host",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "endpoint_host"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "public_key",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "public_key"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "created_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "created_at"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "updated_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "updated_at"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "networks!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 7,
+        "name": "token_prefix",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "token_prefix"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "token_created_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "token_created_at"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "last_seen_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "last_seen_at"
+          }
+        }
+      },
+      {
+        "ordinal": 10,
+        "name": "last_seen_ip",
+        "type_info": "Text",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 11,
+        "name": "hub_version",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "hub_version"
+          }
+        }
+      },
+      {
+        "ordinal": 12,
+        "name": "state_revision",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "state_revision"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      null,
+      true,
+      true,
+      true,
+      null,
+      true,
+      false
+    ]
+  },
+  "hash": "939bdc317f41f610777e5d42effb768201907f8f62d771586243cc621c2be869"
+}

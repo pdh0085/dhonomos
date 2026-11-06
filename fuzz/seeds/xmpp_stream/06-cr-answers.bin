@@ -1,0 +1,1 @@
+<?xml version='1.0'?><stream:stream to='acs.example.net' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0'><iq type="result" id="cr-abc" to="acs@acs.example.net/dhonomos"/> <iq type="error" id="cr-abd"><error type="auth"><not-authorized xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/></error></iq>

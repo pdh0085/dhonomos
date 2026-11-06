@@ -1,0 +1,19 @@
+[package]
+name = "dhonomos-cwmp-codec"
+description = "CWMP (TR-069) SOAP envelope and RPC codec"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+quick-xml.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true
+
+[lints]
+workspace = true

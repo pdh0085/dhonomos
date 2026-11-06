@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO metric_samples (device_id, metric_id, ts, value)\n            SELECT $1, * FROM unnest($2::int[], $3::timestamptz[], $4::float8[])\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Int4Array",
+        "TimestamptzArray",
+        "Float8Array"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "e1caeac884a6d53d24d9bec2e302341130ce5d05be0b1beac0ed02d1e88e38f3"
+}

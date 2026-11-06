@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE wg_members SET rotate_requested_at = NULL WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "709e246f205048a184cbec2b87b6b3dc87c5b7b134b7b4d4ecfc60ab65868e56"
+}

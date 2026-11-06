@@ -1,0 +1,31 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT count(*) AS \"n!\" FROM devices d\n            WHERE d.tenant_id = $1 AND d.status = $2\n              AND ($3::text IS NULL OR d.protocol = $3)\n              AND ($4::text IS NULL OR d.oui = $4)\n              AND ($5::text IS NULL OR d.product_class = $5)\n              AND (cardinality($6::text[]) = 0 OR d.software_version = ANY($6))\n              AND d.tags @> $7::text[]\n              AND (cardinality($8::uuid[]) = 0 OR d.id = ANY($8))\n              AND d.attributes @> $9::jsonb\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "n!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "TextArray",
+        "TextArray",
+        "UuidArray",
+        "Jsonb"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "debd331055a9ed7c958df120edc606459e6ccae749f7fc352b1576f5a36981de"
+}

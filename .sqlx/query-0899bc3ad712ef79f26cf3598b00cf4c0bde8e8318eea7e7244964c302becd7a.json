@@ -1,0 +1,19 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO device_credentials (device_id, kind, username, secret_ciphertext, nonce, key_id)\n            VALUES ($1, $2, $3, $4, $5, $6)\n            ON CONFLICT (device_id, kind) DO UPDATE SET\n                username = EXCLUDED.username, secret_ciphertext = EXCLUDED.secret_ciphertext,\n                nonce = EXCLUDED.nonce, key_id = EXCLUDED.key_id, rotated_at = now()\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Bytea",
+        "Bytea",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "0899bc3ad712ef79f26cf3598b00cf4c0bde8e8318eea7e7244964c302becd7a"
+}

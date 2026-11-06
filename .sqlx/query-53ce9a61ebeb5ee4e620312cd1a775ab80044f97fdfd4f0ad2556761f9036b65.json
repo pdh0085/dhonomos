@@ -1,0 +1,24 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT ipv4_prefix::text AS \"prefix!\" FROM wg_networks\n        WHERE tenant_id = $1 AND ($2::uuid IS NULL OR id <> $2)\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "prefix!",
+        "type_info": "Text",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "53ce9a61ebeb5ee4e620312cd1a775ab80044f97fdfd4f0ad2556761f9036b65"
+}

@@ -1,0 +1,53 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT yaml, actor, at FROM alarm_rule_set_history\n            WHERE tenant_id = $1 ORDER BY id DESC LIMIT $2\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "yaml",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarm_rule_set_history",
+            "name": "yaml"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "actor",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarm_rule_set_history",
+            "name": "actor"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "alarm_rule_set_history",
+            "name": "at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      true,
+      true,
+      false
+    ]
+  },
+  "hash": "50abb12f5197cb5bb2045e1fe89f9619c765c22c6ae05d134bce1026287880f1"
+}

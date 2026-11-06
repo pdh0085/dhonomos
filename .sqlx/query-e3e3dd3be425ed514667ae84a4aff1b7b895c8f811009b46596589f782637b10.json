@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE users SET oidc_issuer = $2, oidc_subject = $3\n            WHERE id = $1 AND oidc_subject IS NULL\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "e3e3dd3be425ed514667ae84a4aff1b7b895c8f811009b46596589f782637b10"
+}

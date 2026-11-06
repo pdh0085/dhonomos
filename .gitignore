@@ -1,0 +1,12 @@
+/target
+**/*.rs.bk
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+.DS_Store
+*.log
+deploy/dhonomos.env
+# Development server state: uploaded files (DHONOMOS_FILES_DIR default data/files)
+/data/

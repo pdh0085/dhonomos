@@ -1,0 +1,1 @@
+<?xml version='1.0'?><stream:stream to='acs.example.net' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0'><iq type="set" id="bind1"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><resource>cwmp-1</resource></bind></iq>

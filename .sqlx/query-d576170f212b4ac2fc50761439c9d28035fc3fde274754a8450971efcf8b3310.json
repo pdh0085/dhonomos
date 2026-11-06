@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE wg_members SET psk_ciphertext = $2, psk_nonce = $3, updated_at = now()\n            WHERE id = $1 AND preshared_key_enabled AND revoked_at IS NULL\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Bytea",
+        "Bytea"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "d576170f212b4ac2fc50761439c9d28035fc3fde274754a8450971efcf8b3310"
+}

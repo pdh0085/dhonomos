@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM alarms WHERE state = 'cleared' AND cleared_at < $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Timestamptz"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "5a59bad293a342248a465b64e6e5065076104581de60d473e08a090aebb2f56e"
+}

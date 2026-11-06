@@ -1,0 +1,67 @@
+[package]
+name = "dhonomos-usp-mtp"
+description = "USP message transfer protocols (MQTT, WebSocket, STOMP)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+axum = { workspace = true, features = ["ws"] }
+futures-util = { workspace = true, features = ["sink"] }
+rustls-native-certs.workspace = true
+tokio-tungstenite = { workspace = true, features = ["__rustls-tls"] }
+bytes.workspace = true
+hyper.workspace = true
+hyper-util = { workspace = true, features = ["service"] }
+dhonomos-common.workspace = true
+dhonomos-pki.workspace = true
+dhonomos-usp-proto.workspace = true
+prost.workspace = true
+rustls.workspace = true
+rustls-pki-types.workspace = true
+socket2 = { workspace = true, features = ["all"] }
+tokio-rustls.workspace = true
+metrics.workspace = true
+rumqttc.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+# TCP_INFO (when an Agent's TCP stack last acknowledged anything), Linux only.
+[target.'cfg(target_os = "linux")'.dependencies]
+libc.workspace = true
+
+[dev-dependencies]
+dhonomos-pki.workspace = true
+rustls.workspace = true
+rustls-pki-types.workspace = true
+tokio-rustls.workspace = true
+futures-util = { workspace = true, features = ["sink"] }
+tokio-tungstenite.workspace = true
+rumqttc.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+tempfile.workspace = true
+testcontainers-modules.workspace = true
+tracing-subscriber.workspace = true
+
+[lints.rust]
+# Denied, not forbidden, in this crate only: heard.rs reads TCP_INFO through getsockopt
+# (one #[allow]ed function). Everything else keeps the workspace table, copied here.
+unsafe_code = "deny"
+missing_debug_implementations = "warn"
+unreachable_pub = "warn"
+rust_2018_idioms = { level = "warn", priority = -1 }
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+dbg_macro = "warn"
+todo = "warn"
+unwrap_used = "warn"
+undocumented_unsafe_blocks = "warn"
+print_stdout = "warn"

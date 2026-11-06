@@ -1,0 +1,24 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                    SELECT EXISTS (SELECT 1 FROM wg_members\n                                   WHERE network_id = $1 AND device_id = $2 AND revoked_at IS NULL)\n                    AS \"e!\"\n                    ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "e!",
+        "type_info": "Bool",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "feffc0dedb955ac0d4707547da878d3cdf6951aaf695053d6e5d810148048c00"
+}

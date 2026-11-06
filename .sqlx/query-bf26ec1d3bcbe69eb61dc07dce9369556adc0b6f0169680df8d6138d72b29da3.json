@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE devices SET\n                manufacturer = COALESCE($2, manufacturer),\n                oui = COALESCE($3, oui),\n                product_class = COALESCE($4, product_class),\n                serial_number = COALESCE($5, serial_number),\n                model_name = COALESCE($6, model_name),\n                software_version = COALESCE($7, software_version),\n                hardware_version = COALESCE($8, hardware_version),\n                data_model = COALESCE($9, data_model),\n                last_contact_at = now()\n            WHERE id = $1\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "bf26ec1d3bcbe69eb61dc07dce9369556adc0b6f0169680df8d6138d72b29da3"
+}

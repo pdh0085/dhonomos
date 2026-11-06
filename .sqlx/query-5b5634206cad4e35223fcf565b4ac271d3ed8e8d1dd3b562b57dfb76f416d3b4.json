@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM device_credentials WHERE device_id = $1 AND kind IN ($2, $3)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "5b5634206cad4e35223fcf565b4ac271d3ed8e8d1dd3b562b57dfb76f416d3b4"
+}

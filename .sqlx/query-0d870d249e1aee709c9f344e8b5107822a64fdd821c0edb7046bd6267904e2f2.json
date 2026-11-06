@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE tasks SET state = 'cancelled', finished_at = now(),\n                trace = trace || task_step('cancelled', attempts)\n            WHERE id = $1 AND state = 'pending'\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "0d870d249e1aee709c9f344e8b5107822a64fdd821c0edb7046bd6267904e2f2"
+}

@@ -1,0 +1,26 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            WITH old AS (\n                SELECT id, token_hash IS NOT NULL AS had FROM wg_hubs\n                WHERE id = $1 AND tenant_id = $2 FOR UPDATE\n            )\n            UPDATE wg_hubs h SET token_hash = $3, token_prefix = $4, token_created_at = now()\n            FROM old WHERE h.id = old.id\n            RETURNING old.had AS \"had!\"\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "had!",
+        "type_info": "Bool",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Bytea",
+        "Text"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "0aaa1f3ae04cb789233117aad8db73dd9cf866e52da3a3631fe1b942fd54e9e2"
+}

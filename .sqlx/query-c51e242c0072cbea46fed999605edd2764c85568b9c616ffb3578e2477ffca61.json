@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO metric_names (path) SELECT unnest($1::text[]) ON CONFLICT (path) DO NOTHING",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "TextArray"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "c51e242c0072cbea46fed999605edd2764c85568b9c616ffb3578e2477ffca61"
+}

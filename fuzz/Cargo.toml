@@ -1,0 +1,57 @@
+[package]
+name = "dhonomos-fuzz"
+version = "0.0.0"
+edition = "2024"
+license = "Apache-2.0"
+publish = false
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+bytes = "1"
+prost = "0.14"
+dhonomos-cwmp-codec = { path = "../crates/cwmp-codec" }
+dhonomos-datamodel = { path = "../crates/datamodel" }
+dhonomos-usp-mtp = { path = "../crates/usp-mtp" }
+dhonomos-usp-proto = { path = "../crates/usp-proto" }
+dhonomos-xmpp = { path = "../crates/xmpp" }
+
+# Not part of the main workspace: built with `cargo +nightly fuzz`.
+[workspace]
+
+[[bin]]
+name = "cwmp_decode"
+path = "fuzz_targets/cwmp_decode.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "usp_record"
+path = "fuzz_targets/usp_record.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "dm_path"
+path = "fuzz_targets/dm_path.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "mqtt_packet"
+path = "fuzz_targets/mqtt_packet.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "xmpp_stream"
+path = "fuzz_targets/xmpp_stream.rs"
+test = false
+doc = false
+bench = false

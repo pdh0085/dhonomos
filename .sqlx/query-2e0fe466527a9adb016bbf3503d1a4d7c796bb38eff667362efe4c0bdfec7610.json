@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM alarm_silences WHERE ends_at < $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Timestamptz"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "2e0fe466527a9adb016bbf3503d1a4d7c796bb38eff667362efe4c0bdfec7610"
+}

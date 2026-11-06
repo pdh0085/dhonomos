@@ -1,0 +1,18 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                INSERT INTO devices (id, tenant_id, protocol, endpoint_id, tags)\n                SELECT w.id, $1, 'usp', w.endpoint_id,\n                       COALESCE((SELECT array_agg(t.tag ORDER BY t.n)\n                                 FROM unnest($4::uuid[], $5::text[])\n                                      WITH ORDINALITY AS t(device_id, tag, n)\n                                 WHERE t.device_id = w.id), '{}')\n                FROM unnest($2::uuid[], $3::text[]) AS w(id, endpoint_id)\n                ON CONFLICT (tenant_id, endpoint_id) WHERE protocol = 'usp' DO NOTHING\n                ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "UuidArray",
+        "TextArray",
+        "UuidArray",
+        "TextArray"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "98ca8bfc0750076d42b0385938c1c875e6db1ff18919ccb8ddaa625ce668c5fe"
+}

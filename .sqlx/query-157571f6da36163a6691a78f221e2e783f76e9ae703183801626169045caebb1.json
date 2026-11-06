@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE tasks SET\n                state = CASE WHEN attempts >= max_attempts THEN 'failed' ELSE 'pending' END,\n                error = 'session aborted before the device answered',\n                finished_at = CASE WHEN attempts >= max_attempts THEN now() END,\n                trace = trace || task_step(\n                    CASE WHEN attempts >= max_attempts THEN 'failed' ELSE 'retry' END,\n                    attempts, 'session aborted before the device answered')\n            WHERE device_id = $1 AND state = 'running' AND result IS NULL\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "157571f6da36163a6691a78f221e2e783f76e9ae703183801626169045caebb1"
+}

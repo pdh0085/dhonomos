@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        INSERT INTO config_revisions (tenant_id, kind, revision) VALUES ($1, $2, 1)\n        ON CONFLICT (tenant_id, kind) DO UPDATE SET revision = config_revisions.revision + 1\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "c9eed8cd1684121dd8237a6848d7b5266e09d22556c73b47146a1046592baa3f"
+}

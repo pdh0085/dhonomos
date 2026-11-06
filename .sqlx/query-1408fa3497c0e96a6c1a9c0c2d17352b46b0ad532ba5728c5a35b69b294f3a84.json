@@ -1,0 +1,18 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO device_params (device_id, path, value, xsd_type, writable)\n            SELECT $1, u.path, u.value, u.xsd_type, u.writable\n            FROM UNNEST($2::text[], $3::text[], $4::text[], $5::bool[])\n                AS u (path, value, xsd_type, writable)\n            ON CONFLICT (device_id, path) DO UPDATE SET\n                value = COALESCE(EXCLUDED.value, device_params.value),\n                xsd_type = COALESCE(EXCLUDED.xsd_type, device_params.xsd_type),\n                writable = COALESCE(EXCLUDED.writable, device_params.writable),\n                updated_at = now()\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "TextArray",
+        "TextArray",
+        "TextArray",
+        "BoolArray"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "1408fa3497c0e96a6c1a9c0c2d17352b46b0ad532ba5728c5a35b69b294f3a84"
+}

@@ -1,0 +1,24 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT sp.prefix::text AS \"prefix!\"\n        FROM wg_site_prefixes sp JOIN wg_members m ON m.id = sp.member_id\n        WHERE m.network_id = $1 AND m.revoked_at IS NULL AND m.id <> $2\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "prefix!",
+        "type_info": "Text",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "cc96fa014ed7d1a2ad7a6b25937e90ea55eb17d4414175bdc9057c6639eeae99"
+}

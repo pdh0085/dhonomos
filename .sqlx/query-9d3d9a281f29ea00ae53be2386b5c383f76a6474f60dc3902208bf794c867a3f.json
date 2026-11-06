@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                UPDATE job_devices SET state = 'failed', finished_at = now(),\n                    error = 'the device did not report software version ' || $2 || ' in time'\n                WHERE job_id = $1 AND state = 'verifying' AND verify_deadline < now()\n                ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "9d3d9a281f29ea00ae53be2386b5c383f76a6474f60dc3902208bf794c867a3f"
+}

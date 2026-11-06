@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO job_devices (job_id, device_id, rank)\n            SELECT $1, d.id, row_number() OVER (ORDER BY random())\n            FROM devices d\n            WHERE d.tenant_id = $2 AND d.status = $3\n              AND ($4::text IS NULL OR d.protocol = $4)\n              AND ($5::text IS NULL OR d.oui = $5)\n              AND ($6::text IS NULL OR d.product_class = $6)\n              AND (cardinality($7::text[]) = 0 OR d.software_version = ANY($7))\n              AND d.tags @> $8::text[]\n              AND (cardinality($9::uuid[]) = 0 OR d.id = ANY($9))\n              AND d.attributes @> $10::jsonb\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "TextArray",
+        "TextArray",
+        "UuidArray",
+        "Jsonb"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "85509e6f71353918461a7d24ff8102781096595c2feff6a51e3082b16e3b2e0d"
+}

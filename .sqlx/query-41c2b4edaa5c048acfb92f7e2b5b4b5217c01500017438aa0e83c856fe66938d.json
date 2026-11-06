@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT count(*) AS \"n!\" FROM wg_members m\n            WHERE m.network_id = $1 AND ($2 OR m.revoked_at IS NULL)\n              AND ((m.kind = 'client' AND ($3 OR m.user_id = $4))\n                   OR (m.kind = 'device' AND EXISTS (\n                       SELECT 1 FROM devices d\n                       WHERE d.id = m.device_id AND d.tenant_id = $6 AND device_in_scope(d, $5))))\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "n!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Bool",
+        "Bool",
+        "Uuid",
+        "Jsonb",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "41c2b4edaa5c048acfb92f7e2b5b4b5217c01500017438aa0e83c856fe66938d"
+}

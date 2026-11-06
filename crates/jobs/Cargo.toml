@@ -1,0 +1,26 @@
+[package]
+name = "dhonomos-jobs"
+description = "Bulk job and campaign engine, scheduler"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+metrics.workspace = true
+dhonomos-core.workspace = true
+dhonomos-store.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+time.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+uuid.workspace = true
+
+[dev-dependencies]
+testcontainers-modules.workspace = true
+
+[lints]
+workspace = true

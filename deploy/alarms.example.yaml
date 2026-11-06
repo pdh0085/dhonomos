@@ -1,0 +1,30 @@
+# Example alarm rules for `dhonomos --alarms deploy/alarms.example.yaml` (CO-07).
+# Rule check every 1 min; alarm clears by itself when its condition stops.
+# Maintenance windows = silences (UI Alarms page, or POST /api/v1/alarm-silences).
+
+# > this many alarms of one rule raised (or cleared) in one check -> one `alarm.storm` webhook.
+# Default 50; 0 = never group.
+storm_threshold: 50
+
+alarms:
+  # Devices that inform at least 1/h.
+  - name: offline-2h
+    severity: major
+    when: { offline_minutes: 120 }
+
+  # Wi-Fi noise from BulkData reports (DG-04).
+  - name: wifi-noise
+    severity: minor
+    devices: { product_class: Box }
+    when: { metric: Device.WiFi.Radio.1.Stats.Noise, above: -70 }
+
+  # Reboot loops.
+  - name: boot-storm
+    severity: warning
+    when: { event: inform, detail: { events: ["1 BOOT"] }, count: 5, within_minutes: 60 }
+
+  # WireGuard device members (ADR-110): hub reporting, but no handshake for 10 min.
+  # Live session renews ~every 2 min -> min 3.
+  # - name: wg-handshake
+  #   severity: major
+  #   when: { wg_handshake_minutes: 10 }

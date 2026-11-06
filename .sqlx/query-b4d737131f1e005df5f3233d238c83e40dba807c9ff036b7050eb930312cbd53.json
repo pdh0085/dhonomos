@@ -1,0 +1,277 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT m.id, m.network_id, m.kind, m.device_id, m.user_id, m.name, m.public_key,\n                   m.key_mode, m.preshared_key_enabled, host(m.address) AS \"address!\",\n                   m.revoked_at, m.revoked_reason, m.device_state, m.device_detail,\n                   m.device_checked_at, m.device_applied_hash, m.rotate_requested_at,\n                   m.created_at, m.updated_at, n.name AS network_name, t.id AS owner_id,\n                   t.protocol AS owner_protocol\n            FROM devices d\n            JOIN devices t ON t.tenant_id = d.tenant_id\n                AND (t.id = d.id\n                     OR (t.oui = d.oui AND t.serial_number = d.serial_number\n                         AND d.oui <> '' AND d.serial_number <> ''))\n            JOIN wg_members m ON m.device_id = t.id\n            JOIN wg_networks n ON n.id = m.network_id AND n.tenant_id = d.tenant_id\n            WHERE d.id = $2 AND d.tenant_id = $1\n              AND m.kind = 'device' AND m.revoked_at IS NULL\n              AND device_in_scope(t, $3)\n            ORDER BY n.name, m.id\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "network_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "network_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "kind",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "kind"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "device_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "device_id"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "user_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "user_id"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "name",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "public_key",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "public_key"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "key_mode",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "key_mode"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "preshared_key_enabled",
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "preshared_key_enabled"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "address!",
+        "type_info": "Text",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 10,
+        "name": "revoked_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "revoked_at"
+          }
+        }
+      },
+      {
+        "ordinal": 11,
+        "name": "revoked_reason",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "revoked_reason"
+          }
+        }
+      },
+      {
+        "ordinal": 12,
+        "name": "device_state",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "device_state"
+          }
+        }
+      },
+      {
+        "ordinal": 13,
+        "name": "device_detail",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "device_detail"
+          }
+        }
+      },
+      {
+        "ordinal": 14,
+        "name": "device_checked_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "device_checked_at"
+          }
+        }
+      },
+      {
+        "ordinal": 15,
+        "name": "device_applied_hash",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "device_applied_hash"
+          }
+        }
+      },
+      {
+        "ordinal": 16,
+        "name": "rotate_requested_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "rotate_requested_at"
+          }
+        }
+      },
+      {
+        "ordinal": 17,
+        "name": "created_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "created_at"
+          }
+        }
+      },
+      {
+        "ordinal": 18,
+        "name": "updated_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "updated_at"
+          }
+        }
+      },
+      {
+        "ordinal": 19,
+        "name": "network_name",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_networks",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "ordinal": 20,
+        "name": "owner_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 21,
+        "name": "owner_protocol",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "protocol"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Jsonb"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      true,
+      false,
+      null,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "b4d737131f1e005df5f3233d238c83e40dba807c9ff036b7050eb930312cbd53"
+}

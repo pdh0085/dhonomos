@@ -1,0 +1,151 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT u.id, u.tenant_id, u.username, u.password_hash, u.role, u.disabled,\n                   u.created_at, u.last_login_at, u.scope, s.sso,\n                   EXISTS (SELECT 1 FROM user_totp t WHERE t.user_id = u.id AND t.enabled_at IS NOT NULL) AS \"totp_enabled!\",\n                   (s.last_seen_at < now() - interval '1 minute') AS \"stale!\"\n            FROM sessions s JOIN users u ON u.id = s.user_id\n            WHERE s.token_hash = $1 AND s.expires_at > now() AND NOT u.disabled\n              AND ($2::float8 <= 0 OR s.last_seen_at > now() - make_interval(secs => $2::float8))\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "users",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "tenant_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "users",
+            "name": "tenant_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "username",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "users",
+            "name": "username"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "password_hash",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "users",
+            "name": "password_hash"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "role",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "users",
+            "name": "role"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "disabled",
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "users",
+            "name": "disabled"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "created_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "users",
+            "name": "created_at"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "last_login_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "users",
+            "name": "last_login_at"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "scope",
+        "type_info": "Jsonb",
+        "origin": {
+          "Table": {
+            "table": "users",
+            "name": "scope"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "sso",
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "sessions",
+            "name": "sso"
+          }
+        }
+      },
+      {
+        "ordinal": 10,
+        "name": "totp_enabled!",
+        "type_info": "Bool",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 11,
+        "name": "stale!",
+        "type_info": "Bool",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Bytea",
+        "Float8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      null,
+      null
+    ]
+  },
+  "hash": "b4a8b66ce5d9b6c2bbf85e6424f5e3ce477e4c0e82755e99b7568f062998f19c"
+}

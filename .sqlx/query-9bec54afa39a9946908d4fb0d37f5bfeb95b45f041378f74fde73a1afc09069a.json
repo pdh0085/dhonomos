@@ -1,0 +1,29 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT last_id FROM audit_export WHERE tenant_id = $1 AND sink = $2",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "last_id",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "audit_export",
+            "name": "last_id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "9bec54afa39a9946908d4fb0d37f5bfeb95b45f041378f74fde73a1afc09069a"
+}

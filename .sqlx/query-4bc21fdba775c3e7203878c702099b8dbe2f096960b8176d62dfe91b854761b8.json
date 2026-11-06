@@ -1,0 +1,77 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT path, value, xsd_type, writable, updated_at\n            FROM device_params\n            WHERE device_id = $1 AND starts_with(path, $2)\n            ORDER BY path\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "path",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "device_params",
+            "name": "path"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "value",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "device_params",
+            "name": "value"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "xsd_type",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "device_params",
+            "name": "xsd_type"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "writable",
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "device_params",
+            "name": "writable"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "updated_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "device_params",
+            "name": "updated_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      true,
+      true,
+      false
+    ]
+  },
+  "hash": "4bc21fdba775c3e7203878c702099b8dbe2f096960b8176d62dfe91b854761b8"
+}

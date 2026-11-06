@@ -1,0 +1,24 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                    SELECT EXISTS (\n                        SELECT 1 FROM devices d\n                        JOIN devices t ON t.tenant_id = d.tenant_id AND t.id <> d.id\n                            AND t.oui = d.oui AND t.serial_number = d.serial_number\n                        JOIN wg_members m ON m.device_id = t.id\n                        WHERE d.id = $2 AND d.oui <> '' AND d.serial_number <> ''\n                          AND m.network_id = $1 AND m.kind = 'device' AND m.revoked_at IS NULL)\n                    AS \"e!\"\n                    ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "e!",
+        "type_info": "Bool",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "11bbb2d1c68239c656a33b0995a81cb26188b86a5974bfe5f58f861548d6b48d"
+}

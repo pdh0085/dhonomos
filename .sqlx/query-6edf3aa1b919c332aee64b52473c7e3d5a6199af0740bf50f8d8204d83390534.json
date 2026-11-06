@@ -1,0 +1,41 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT m.psk_ciphertext, m.psk_nonce\n            FROM wg_members m JOIN wg_networks n ON n.id = m.network_id\n            WHERE m.id = $1 AND n.tenant_id = $2\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "psk_ciphertext",
+        "type_info": "Bytea",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "psk_ciphertext"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "psk_nonce",
+        "type_info": "Bytea",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "psk_nonce"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      true,
+      true
+    ]
+  },
+  "hash": "6edf3aa1b919c332aee64b52473c7e3d5a6199af0740bf50f8d8204d83390534"
+}

@@ -1,0 +1,63 @@
+[package]
+name = "dhonomos-api"
+description = "Northbound REST API"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+argon2.workspace = true
+base64.workspace = true
+data-encoding.workspace = true
+getrandom.workspace = true
+flate2.workspace = true
+axum.workspace = true
+futures-util.workspace = true
+metrics.workspace = true
+metrics-exporter-prometheus.workspace = true
+qrcodegen.workspace = true
+dhonomos-common.workspace = true
+dhonomos-core.workspace = true
+dhonomos-cwmp-codec.workspace = true
+dhonomos-jobs.workspace = true
+dhonomos-pki.workspace = true
+dhonomos-store.workspace = true
+dhonomos-wireguard.workspace = true
+dhonomos-xmpp.workspace = true
+ring.workspace = true
+rust-embed.workspace = true
+serde.workspace = true
+serde-saphyr.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+time.workspace = true
+tokio.workspace = true
+tokio-rustls.workspace = true
+tower.workspace = true
+tower-http.workspace = true
+tracing.workspace = true
+utoipa.workspace = true
+uuid.workspace = true
+zeroize.workspace = true
+zip.workspace = true
+
+[dev-dependencies]
+flate2.workspace = true
+dhonomos-cwmp-codec.workspace = true
+dhonomos-jobs.workspace = true
+rcgen.workspace = true
+rustls.workspace = true
+rustls-pki-types.workspace = true
+x509-parser.workspace = true
+dhonomos-core.workspace = true
+metrics-exporter-prometheus.workspace = true
+http-body-util.workspace = true
+sqlx.workspace = true
+testcontainers-modules.workspace = true
+tracing-subscriber.workspace = true
+
+[lints]
+workspace = true

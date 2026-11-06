@@ -1,0 +1,78 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT revision, enabled, definition, changed_by, changed_at\n            FROM preset_history WHERE tenant_id = $1 AND name = $2\n            ORDER BY id DESC LIMIT $3\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "revision",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "preset_history",
+            "name": "revision"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "enabled",
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "preset_history",
+            "name": "enabled"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "definition",
+        "type_info": "Jsonb",
+        "origin": {
+          "Table": {
+            "table": "preset_history",
+            "name": "definition"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "changed_by",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "preset_history",
+            "name": "changed_by"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "changed_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "preset_history",
+            "name": "changed_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      true,
+      false
+    ]
+  },
+  "hash": "defc30b63f72f6c242b396c207fa0a2a751ac33d83ad0c549d1e98616364537b"
+}

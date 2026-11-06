@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM wg_site_prefixes WHERE member_id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "aae1b44332b7a0b3942af98f940c6855e8f97209fdb260bd5115c8819eac94ea"
+}

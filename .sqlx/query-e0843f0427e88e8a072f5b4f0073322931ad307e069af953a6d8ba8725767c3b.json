@@ -1,0 +1,36 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT d.id FROM devices d\n            WHERE d.tenant_id = $1 AND d.id = ANY($2)\n              AND ($3::text IS NULL OR d.protocol = $3)\n              AND ($4::text IS NULL OR d.oui = $4)\n              AND ($5::text IS NULL OR d.product_class = $5)\n              AND (cardinality($6::text[]) = 0 OR d.software_version = ANY($6))\n              AND d.tags @> $7::text[]\n              AND (cardinality($8::uuid[]) = 0 OR d.id = ANY($8))\n              AND d.attributes @> $9::jsonb\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "UuidArray",
+        "Text",
+        "Text",
+        "Text",
+        "TextArray",
+        "TextArray",
+        "UuidArray",
+        "Jsonb"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "e0843f0427e88e8a072f5b4f0073322931ad307e069af953a6d8ba8725767c3b"
+}

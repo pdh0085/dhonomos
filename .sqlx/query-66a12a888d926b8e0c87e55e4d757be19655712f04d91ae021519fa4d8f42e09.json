@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT yaml FROM alarm_rule_sets WHERE tenant_id = $1 FOR UPDATE",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "yaml",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarm_rule_sets",
+            "name": "yaml"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "66a12a888d926b8e0c87e55e4d757be19655712f04d91ae021519fa4d8f42e09"
+}

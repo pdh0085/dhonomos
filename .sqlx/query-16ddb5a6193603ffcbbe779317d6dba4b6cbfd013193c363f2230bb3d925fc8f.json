@@ -1,0 +1,36 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT error AS \"error!\", COALESCE(finished_at, created_at) AS \"finished_at!\"\n            FROM tasks\n            WHERE tenant_id = $1 AND idempotency_key = ANY($2)\n              AND state = 'failed' AND error IS NOT NULL\n            ORDER BY finished_at DESC NULLS LAST, id DESC\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "error!",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "tasks",
+            "name": "error"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "finished_at!",
+        "type_info": "Timestamptz",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "TextArray"
+      ]
+    },
+    "nullable": [
+      true,
+      null
+    ]
+  },
+  "hash": "16ddb5a6193603ffcbbe779317d6dba4b6cbfd013193c363f2230bb3d925fc8f"
+}

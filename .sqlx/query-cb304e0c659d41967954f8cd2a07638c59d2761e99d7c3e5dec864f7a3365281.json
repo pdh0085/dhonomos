@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE wg_members SET rotate_requested_at = now(), device_state = 'pending',\n                device_detail = NULL\n            WHERE network_id = $1 AND kind = 'device' AND revoked_at IS NULL\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "cb304e0c659d41967954f8cd2a07638c59d2761e99d7c3e5dec864f7a3365281"
+}

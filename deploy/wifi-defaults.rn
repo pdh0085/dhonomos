@@ -1,0 +1,17 @@
+// Wi-Fi defaults for new routers (preset `wifi-defaults` in presets.example.yaml).
+// `device`: read stored values, declare changes. `args`: from the preset.
+pub fn main(device, args) {
+    let ssid = "Device.WiFi.SSID.1.SSID";
+    // Keep customer names; unnamed network -> named after the serial number.
+    match device.get(ssid) {
+        None => device.refresh("Device.WiFi.SSID."),
+        Some(name) if name == "" => device.set(ssid, `${args["ssid_prefix"]}-${device.serial}`),
+        Some(_) => {}
+    }
+    // Guest network only if ordered (device tag).
+    let guest = device.has_tag(args["guest_tag"]);
+    device.set("Device.WiFi.SSID.2.Enable", guest);
+    if guest {
+        device.log("guest network enabled");
+    }
+}

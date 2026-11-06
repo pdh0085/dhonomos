@@ -1,0 +1,31 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO supported_models (id, fingerprint, protocol, model)\n            VALUES ($1, $2, $3, $4)\n            ON CONFLICT (fingerprint) DO UPDATE\n                SET protocol = EXCLUDED.protocol, model = EXCLUDED.model, created_at = now()\n            RETURNING id AS \"id!\"\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "supported_models",
+            "name": "id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Jsonb"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "6844e8f885fc699c1ace5b381d177854f5893fc97878435401c9125740811335"
+}

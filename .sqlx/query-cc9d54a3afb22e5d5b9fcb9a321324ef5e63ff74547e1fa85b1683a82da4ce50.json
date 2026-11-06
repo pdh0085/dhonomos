@@ -1,0 +1,29 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            DELETE FROM files f USING devices d\n            WHERE f.device_id = d.id AND d.id = $1 AND d.tenant_id = $2\n            RETURNING f.id\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "files",
+            "name": "id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "cc9d54a3afb22e5d5b9fcb9a321324ef5e63ff74547e1fa85b1683a82da4ce50"
+}

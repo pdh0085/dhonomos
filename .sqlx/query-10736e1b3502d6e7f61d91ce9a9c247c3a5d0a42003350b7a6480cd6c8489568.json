@@ -1,0 +1,155 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT n.id, n.hub_id, h.name AS hub_name, h.endpoint_host AS hub_endpoint_host,\n                   h.public_key AS hub_public_key, n.name, n.ipv4_prefix::text AS \"ipv4_prefix!\",\n                   n.listen_port, n.mtu, n.persistent_keepalive, n.created_at, n.updated_at\n            FROM wg_networks n JOIN wg_hubs h ON h.id = n.hub_id\n            WHERE n.tenant_id = $1 ORDER BY n.name\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_networks",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "hub_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_networks",
+            "name": "hub_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "hub_name",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "hub_endpoint_host",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "endpoint_host"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "hub_public_key",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "public_key"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "name",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_networks",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "ipv4_prefix!",
+        "type_info": "Text",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 7,
+        "name": "listen_port",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "wg_networks",
+            "name": "listen_port"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "mtu",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "wg_networks",
+            "name": "mtu"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "persistent_keepalive",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "wg_networks",
+            "name": "persistent_keepalive"
+          }
+        }
+      },
+      {
+        "ordinal": 10,
+        "name": "created_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_networks",
+            "name": "created_at"
+          }
+        }
+      },
+      {
+        "ordinal": 11,
+        "name": "updated_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_networks",
+            "name": "updated_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      null,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "10736e1b3502d6e7f61d91ce9a9c247c3a5d0a42003350b7a6480cd6c8489568"
+}

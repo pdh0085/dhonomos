@@ -1,0 +1,94 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            WITH up AS (\n                INSERT INTO wg_peer_status (member_id, endpoint, latest_handshake, rx_bytes,\n                                            tx_bytes, reported_at)\n                SELECT m.id, u.endpoint,\n                       CASE WHEN u.handshake > 0 THEN to_timestamp(u.handshake) END,\n                       u.rx, u.tx, now()\n                FROM UNNEST($1::uuid[], $2::text[], $3::text[], $4::bigint[], $5::bigint[],\n                            $6::bigint[]) AS u(network_id, public_key, endpoint, handshake, rx,\n                                               tx)\n                JOIN wg_members m ON m.network_id = u.network_id AND m.public_key = u.public_key\n                                 AND m.revoked_at IS NULL\n                JOIN wg_networks n ON n.id = m.network_id AND n.hub_id = $7\n                ON CONFLICT (member_id) DO UPDATE SET endpoint = EXCLUDED.endpoint,\n                    latest_handshake = EXCLUDED.latest_handshake, rx_bytes = EXCLUDED.rx_bytes,\n                    tx_bytes = EXCLUDED.tx_bytes, reported_at = EXCLUDED.reported_at\n                RETURNING member_id, latest_handshake, rx_bytes, tx_bytes\n            )\n            SELECT up.member_id AS \"member_id!\", m.device_id AS \"device_id?\",\n                   m.network_id AS \"network_id!\", up.latest_handshake AS \"latest_handshake?\",\n                   up.rx_bytes AS \"rx_bytes!\", up.tx_bytes AS \"tx_bytes!\"\n            FROM up JOIN wg_members m ON m.id = up.member_id\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "member_id!",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_peer_status",
+            "name": "member_id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "device_id?",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "device_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "network_id!",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "network_id"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "latest_handshake?",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_peer_status",
+            "name": "latest_handshake"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "rx_bytes!",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "wg_peer_status",
+            "name": "rx_bytes"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "tx_bytes!",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "wg_peer_status",
+            "name": "tx_bytes"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "UuidArray",
+        "TextArray",
+        "TextArray",
+        "Int8Array",
+        "Int8Array",
+        "Int8Array",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      false,
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "8e75451becfb1d582ac5e29611ec8d13f2817d069afce0494a8e70132db5b048"
+}

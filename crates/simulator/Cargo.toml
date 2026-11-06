@@ -1,0 +1,31 @@
+[package]
+name = "dhonomos-simulator"
+description = "CWMP CPE and USP Agent simulators for load tests and demos"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+anyhow.workspace = true
+bytes.workspace = true
+clap.workspace = true
+flate2.workspace = true
+getrandom.workspace = true
+hmac.workspace = true
+http-body-util.workspace = true
+hyper.workspace = true
+hyper-util.workspace = true
+dhonomos-cwmp-codec.workspace = true
+dhonomos-usp-controller.workspace = true
+dhonomos-usp-mtp.workspace = true
+dhonomos-usp-proto.workspace = true
+prost.workspace = true
+serde_json.workspace = true
+sha1.workspace = true
+tokio.workspace = true
+
+[lints]
+workspace = true

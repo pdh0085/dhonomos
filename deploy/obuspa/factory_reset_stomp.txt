@@ -1,0 +1,42 @@
+# OB-USP-Agent factory reset database: STOMP MTP against Dhonomos's embedded broker (ADR-092).
+# Run with --network host against `dhonomos --usp-stomp-listen 127.0.0.1:61613
+# --usp-stomp-login cpe --usp-stomp-passcode <passcode>`; put the passcode below.
+# The Agent destination is left empty: the broker names it in CONNECTED (subscribe-dest).
+
+Device.LocalAgent.Controller.1.EndpointID "self::dhonomos-controller"
+Device.LocalAgent.Controller.1.Alias "dhonomos"
+Device.LocalAgent.Controller.1.Enable true
+Device.LocalAgent.Controller.1.AssignedRole "Device.LocalAgent.ControllerTrust.Role.1"
+Device.LocalAgent.Controller.1.PeriodicNotifInterval "86400"
+Device.LocalAgent.Controller.1.PeriodicNotifTime "0001-01-01T00:00:00Z"
+Device.LocalAgent.Controller.1.USPNotifRetryMinimumWaitInterval "5"
+Device.LocalAgent.Controller.1.USPNotifRetryIntervalMultiplier "2000"
+Device.LocalAgent.Controller.1.ControllerCode ""
+Device.LocalAgent.Controller.1.MTP.1.Alias "dhonomos-stomp"
+Device.LocalAgent.Controller.1.MTP.1.Enable true
+Device.LocalAgent.Controller.1.MTP.1.Protocol "STOMP"
+Device.LocalAgent.Controller.1.MTP.1.STOMP.Reference "Device.STOMP.Connection.1"
+Device.LocalAgent.Controller.1.MTP.1.STOMP.Destination "/queue/usp.controller"
+
+Device.LocalAgent.MTP.1.Alias "dhonomos-stomp"
+Device.LocalAgent.MTP.1.Enable true
+Device.LocalAgent.MTP.1.Protocol "STOMP"
+Device.LocalAgent.MTP.1.STOMP.Reference "Device.STOMP.Connection.1"
+Device.LocalAgent.MTP.1.STOMP.Destination ""
+
+Device.STOMP.Connection.1.Alias "dhonomos"
+Device.STOMP.Connection.1.Enable true
+Device.STOMP.Connection.1.Host "127.0.0.1"
+Device.STOMP.Connection.1.Port "61613"
+Device.STOMP.Connection.1.Username "cpe"
+Device.STOMP.Connection.1.Password "PASSCODE"
+Device.STOMP.Connection.1.EnableEncryption false
+Device.STOMP.Connection.1.VirtualHost "dhonomos"
+Device.STOMP.Connection.1.EnableHeartbeats true
+Device.STOMP.Connection.1.OutgoingHeartbeat "30000"
+Device.STOMP.Connection.1.IncomingHeartbeat "30000"
+Device.STOMP.Connection.1.ServerRetryInitialInterval "5"
+Device.STOMP.Connection.1.ServerRetryIntervalMultiplier "2000"
+Device.STOMP.Connection.1.ServerRetryMaxInterval "60"
+
+Internal.Reboot.Cause "LocalFactoryReset"

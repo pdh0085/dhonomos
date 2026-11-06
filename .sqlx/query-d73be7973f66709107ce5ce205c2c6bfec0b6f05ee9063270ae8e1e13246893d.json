@@ -1,0 +1,29 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT DISTINCT m.network_id\n            FROM devices d\n            JOIN devices t ON t.tenant_id = d.tenant_id AND t.id <> d.id\n                AND t.oui = d.oui AND t.serial_number = d.serial_number\n            JOIN wg_members m ON m.device_id = t.id\n            JOIN wg_networks n ON n.id = m.network_id\n            WHERE d.id = $2 AND d.tenant_id = $1 AND n.tenant_id = $1\n              AND d.oui <> '' AND d.serial_number <> ''\n              AND m.kind = 'device' AND m.revoked_at IS NULL\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "network_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "network_id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "d73be7973f66709107ce5ce205c2c6bfec0b6f05ee9063270ae8e1e13246893d"
+}

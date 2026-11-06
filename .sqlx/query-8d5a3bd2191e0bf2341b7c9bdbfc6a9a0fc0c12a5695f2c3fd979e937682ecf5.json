@@ -1,0 +1,30 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT device_id FROM job_devices\n            WHERE job_id = $1 AND state = 'queued' AND rank <= $2\n            ORDER BY rank LIMIT $3\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "device_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "job_devices",
+            "name": "device_id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Int4",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "8d5a3bd2191e0bf2341b7c9bdbfc6a9a0fc0c12a5695f2c3fd979e937682ecf5"
+}

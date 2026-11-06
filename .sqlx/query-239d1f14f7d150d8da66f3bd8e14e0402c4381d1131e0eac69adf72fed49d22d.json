@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE wg_members SET public_key = NULL, updated_at = now()\n            WHERE id = $1 AND kind = 'device' AND revoked_at IS NULL AND public_key IS NOT NULL\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "239d1f14f7d150d8da66f3bd8e14e0402c4381d1131e0eac69adf72fed49d22d"
+}

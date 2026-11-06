@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE devices\n            SET last_wake_at = now(), last_wake_method = $2, last_wake_outcome = $3\n            WHERE id = $1\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "831c64c81ae735442275e27bb5fb03e9adc29850b2dabb56c72efeb80bcd7674"
+}

@@ -1,0 +1,20 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO usp_certificates (id, tenant_id, device_id, endpoint_id, serial, fingerprint,\n                                          not_after, from_csr, issued_by)\n            SELECT u.id, $1, u.device_id,\n                   (SELECT d.endpoint_id FROM devices d WHERE d.id = u.device_id AND d.protocol = 'usp'),\n                   u.serial, u.fingerprint, u.not_after, false, $2\n            FROM unnest($3::uuid[], $4::uuid[], $5::text[], $6::text[], $7::timestamptz[])\n                 AS u(id, device_id, serial, fingerprint, not_after)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "UuidArray",
+        "UuidArray",
+        "TextArray",
+        "TextArray",
+        "TimestamptzArray"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "4fa6889a20ecbd431f4c1e67417f12701e9c85a25ce812586daf84d1628d9bd4"
+}

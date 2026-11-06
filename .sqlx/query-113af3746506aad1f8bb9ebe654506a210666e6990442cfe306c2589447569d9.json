@@ -1,0 +1,135 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                    UPDATE usp_certificates\n                    SET revoked_at = COALESCE(revoked_at, now()),\n                        revoked_by = CASE WHEN revoked_at IS NULL THEN $3 ELSE revoked_by END,\n                        revoke_reason = CASE WHEN revoked_at IS NULL THEN $4 ELSE revoke_reason END,\n                        endpoint_id = COALESCE(endpoint_id, $5)\n                    WHERE tenant_id = $1 AND fingerprint = $2\n                    RETURNING id, fingerprint, endpoint_id, device_id, serial, not_after,\n                              revoked_at AS \"revoked_at!\", revoked_by, revoke_reason,\n                              true AS \"known!\"\n                    ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "fingerprint",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "fingerprint"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "endpoint_id",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "endpoint_id"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "device_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "device_id"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "serial",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "serial"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "not_after",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "not_after"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "revoked_at!",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "revoked_at"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "revoked_by",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "revoked_by"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "revoke_reason",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "usp_certificates",
+            "name": "revoke_reason"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "known!",
+        "type_info": "Bool",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      null
+    ]
+  },
+  "hash": "113af3746506aad1f8bb9ebe654506a210666e6990442cfe306c2589447569d9"
+}

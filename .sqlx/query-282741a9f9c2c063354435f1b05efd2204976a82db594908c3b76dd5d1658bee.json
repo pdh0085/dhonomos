@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE job_devices SET state = 'failed', error = $3, finished_at = now()\n            WHERE job_id = $1 AND device_id = $2 AND state IN ('queued', 'dispatched')\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "282741a9f9c2c063354435f1b05efd2204976a82db594908c3b76dd5d1658bee"
+}

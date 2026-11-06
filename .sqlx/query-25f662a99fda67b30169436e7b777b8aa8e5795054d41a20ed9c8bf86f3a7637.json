@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE devices SET udp_cr_address = $3, udp_cr_seen_at = now()\n            WHERE id = $1 AND tenant_id = $2 AND protocol = 'cwmp'\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "25f662a99fda67b30169436e7b777b8aa8e5795054d41a20ed9c8bf86f3a7637"
+}

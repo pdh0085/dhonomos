@@ -1,0 +1,45 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT count(*) AS \"active!\",\n                   count(*) FILTER (WHERE last_contact_at > now() - interval '15 minutes') AS \"m15!\",\n                   count(*) FILTER (WHERE last_contact_at > now() - interval '1 hour') AS \"h1!\",\n                   count(*) FILTER (WHERE last_contact_at > now() - interval '1 day') AS \"d1!\"\n            FROM devices d WHERE tenant_id = $1 AND status = 'active' AND device_in_scope(d, $2)\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "active!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 1,
+        "name": "m15!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 2,
+        "name": "h1!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 3,
+        "name": "d1!",
+        "type_info": "Int8",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Jsonb"
+      ]
+    },
+    "nullable": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "809a9836e5c8b8296a86e06c87f9714f1667f27e865c010eaaf87536c1bb6c3c"
+}

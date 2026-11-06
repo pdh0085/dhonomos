@@ -1,0 +1,37 @@
+# Example provisioning presets: `dhonomos --presets deploy/presets.example.yaml`,
+# or UI import (Presets -> Import YAML) after putting the script inline (script_source).
+# Task form = POST /api/v1/devices/{id}/tasks.
+presets:
+  # Every new or factory-reset device -> hourly report.
+  - name: periodic-inform
+    when:
+      events: ["0 BOOTSTRAP"]
+    once: true
+    run:
+      - kind: set_parameter_values
+        payload:
+          values:
+            - name: Device.ManagementServer.PeriodicInformInterval
+              value: "3600"
+              type: unsignedInt
+
+  # Radio settings of one vendor's routers, read after each boot.
+  - name: wifi-snapshot
+    when:
+      events: ["1 BOOT"]
+      oui: 00AA00
+      software_version: "2\\..*"
+    run:
+      - kind: get_parameter_values
+        payload:
+          names: [Device.WiFi.Radio.]
+
+  # Rune script (CO-05, next to this file): declares the wanted state -> only values that
+  # differ from the stored ones are sent. Every run = 1 `script` device event.
+  - name: wifi-defaults
+    when:
+      events: ["0 BOOTSTRAP", "1 BOOT"]
+    script: wifi-defaults.rn
+    args:
+      ssid_prefix: Home
+      guest_tag: guest-wifi

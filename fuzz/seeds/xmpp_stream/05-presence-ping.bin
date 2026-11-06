@@ -1,0 +1,1 @@
+<?xml version='1.0'?><stream:stream to='acs.example.net' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0'><presence/><iq type="get" id="s2c1" to="acs.example.net" from="dev@acs.example.net/"><ping xmlns="urn:xmpp:ping"/></iq>

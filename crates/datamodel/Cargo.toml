@@ -1,0 +1,20 @@
+[package]
+name = "dhonomos-datamodel"
+description = "TR-106 data model XML loader, type system and path expressions"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+quick-xml.workspace = true
+regex.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO runtime_settings_history (tenant_id, key, old, new, actor)\n            VALUES ($1, $2, $3, NULL, $4)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Jsonb",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "7169d3d0b3e955f0221f116a3df6a6f4c34b1877ad23786bef6658d528a45f18"
+}

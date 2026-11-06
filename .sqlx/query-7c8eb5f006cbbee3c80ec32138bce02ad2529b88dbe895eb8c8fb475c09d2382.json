@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE jobs SET task_payload = $3 WHERE id = $1 AND task_payload = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Jsonb",
+        "Jsonb"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "7c8eb5f006cbbee3c80ec32138bce02ad2529b88dbe895eb8c8fb475c09d2382"
+}

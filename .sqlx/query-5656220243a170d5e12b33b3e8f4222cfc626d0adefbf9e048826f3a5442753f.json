@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE devices SET last_remote_addr = $2::text::inet WHERE id = $1 AND protocol = 'usp'",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "5656220243a170d5e12b33b3e8f4222cfc626d0adefbf9e048826f3a5442753f"
+}

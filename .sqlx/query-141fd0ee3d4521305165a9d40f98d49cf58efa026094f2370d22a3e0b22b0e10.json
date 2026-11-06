@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO alarm_rule_set_history (tenant_id, yaml, actor) VALUES ($1, $2, $3)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "141fd0ee3d4521305165a9d40f98d49cf58efa026094f2370d22a3e0b22b0e10"
+}

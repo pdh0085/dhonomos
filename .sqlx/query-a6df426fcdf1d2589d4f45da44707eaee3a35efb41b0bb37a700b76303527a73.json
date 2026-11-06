@@ -1,0 +1,66 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT old, new, actor, at FROM runtime_settings_history\n            WHERE tenant_id = $1 AND key = $2 ORDER BY id DESC LIMIT $3\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "old",
+        "type_info": "Jsonb",
+        "origin": {
+          "Table": {
+            "table": "runtime_settings_history",
+            "name": "old"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "new",
+        "type_info": "Jsonb",
+        "origin": {
+          "Table": {
+            "table": "runtime_settings_history",
+            "name": "new"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "actor",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "runtime_settings_history",
+            "name": "actor"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "runtime_settings_history",
+            "name": "at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      true,
+      true,
+      true,
+      false
+    ]
+  },
+  "hash": "a6df426fcdf1d2589d4f45da44707eaee3a35efb41b0bb37a700b76303527a73"
+}

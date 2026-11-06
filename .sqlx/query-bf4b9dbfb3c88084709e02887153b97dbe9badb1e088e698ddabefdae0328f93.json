@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            DELETE FROM wg_members m USING wg_networks n\n            WHERE m.id = $1 AND n.id = m.network_id AND n.tenant_id = $2\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "bf4b9dbfb3c88084709e02887153b97dbe9badb1e088e698ddabefdae0328f93"
+}

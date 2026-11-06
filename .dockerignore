@@ -1,0 +1,10 @@
+target
+fuzz/target
+fuzz/corpus
+fuzz/artifacts
+ui/node_modules
+ui/build
+ui/.svelte-kit
+data
+**/*.log
+.git

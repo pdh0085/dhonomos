@@ -1,0 +1,52 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT n.path, dm.last_ts, dm.last_value\n            FROM device_metrics dm JOIN metric_names n ON n.id = dm.metric_id\n            WHERE dm.device_id = $1 ORDER BY n.path\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "path",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "metric_names",
+            "name": "path"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "last_ts",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "device_metrics",
+            "name": "last_ts"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "last_value",
+        "type_info": "Float8",
+        "origin": {
+          "Table": {
+            "table": "device_metrics",
+            "name": "last_value"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "84782f3b9e2a02de59379481ab9b468f0c78f4e176e55f9e41e7d5e256422131"
+}

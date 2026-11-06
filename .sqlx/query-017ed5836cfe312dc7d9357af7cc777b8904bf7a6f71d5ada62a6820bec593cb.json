@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE wg_members SET name = COALESCE($2, name), updated_at = now() WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "017ed5836cfe312dc7d9357af7cc777b8904bf7a6f71d5ada62a6820bec593cb"
+}

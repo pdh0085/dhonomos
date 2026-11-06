@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE jobs SET state = 'running', total = $2, started_at = now(), updated_at = now()\n            WHERE id = $1\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "3842fe26d269b1bbff8e802fc57e1aebeb02a8116df3ee21666bc9f377c67aaf"
+}

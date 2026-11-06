@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE wg_hubs SET name = COALESCE($3, name),\n                endpoint_host = COALESCE($4, endpoint_host), updated_at = now()\n            WHERE id = $1 AND tenant_id = $2\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "d2264e5ce8775947537e3a61c4aa28aa9ba7f70d1a6992322190db768e3f7352"
+}

@@ -1,0 +1,24 @@
+# OB-USP-Agent factory reset database: WebSocket MTP, Agent connects to the Controller.
+# Run with --network host against `dhonomos --usp-ws-listen 127.0.0.1:7549`.
+
+Device.LocalAgent.Controller.1.EndpointID "self::dhonomos-controller"
+Device.LocalAgent.Controller.1.Alias "dhonomos"
+Device.LocalAgent.Controller.1.Enable true
+Device.LocalAgent.Controller.1.AssignedRole "Device.LocalAgent.ControllerTrust.Role.1"
+Device.LocalAgent.Controller.1.PeriodicNotifInterval "86400"
+Device.LocalAgent.Controller.1.PeriodicNotifTime "0001-01-01T00:00:00Z"
+Device.LocalAgent.Controller.1.USPNotifRetryMinimumWaitInterval "5"
+Device.LocalAgent.Controller.1.USPNotifRetryIntervalMultiplier "2000"
+Device.LocalAgent.Controller.1.ControllerCode ""
+Device.LocalAgent.Controller.1.MTP.1.Alias "dhonomos-ws"
+Device.LocalAgent.Controller.1.MTP.1.Enable true
+Device.LocalAgent.Controller.1.MTP.1.Protocol "WebSocket"
+Device.LocalAgent.Controller.1.MTP.1.WebSocket.Host "127.0.0.1"
+Device.LocalAgent.Controller.1.MTP.1.WebSocket.Port "7549"
+Device.LocalAgent.Controller.1.MTP.1.WebSocket.Path "/usp"
+Device.LocalAgent.Controller.1.MTP.1.WebSocket.EnableEncryption "false"
+Device.LocalAgent.Controller.1.MTP.1.WebSocket.KeepAliveInterval "30"
+Device.LocalAgent.Controller.1.MTP.1.WebSocket.SessionRetryMinimumWaitInterval "5"
+Device.LocalAgent.Controller.1.MTP.1.WebSocket.SessionRetryIntervalMultiplier "2000"
+
+Internal.Reboot.Cause "LocalFactoryReset"

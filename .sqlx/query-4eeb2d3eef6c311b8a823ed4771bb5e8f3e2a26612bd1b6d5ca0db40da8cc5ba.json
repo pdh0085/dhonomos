@@ -1,0 +1,179 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO alarms (id, tenant_id, device_id, rule, severity, message, detail,\n                                silenced_by)\n            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)\n            ON CONFLICT (device_id, rule) WHERE state = 'active' DO NOTHING\n            RETURNING id, tenant_id, device_id, rule, severity, state, message, detail,\n                      raised_at, cleared_at, acked_at, acked_by, silenced_by\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "tenant_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "tenant_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "device_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "device_id"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "rule",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "rule"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "severity",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "severity"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "state",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "state"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "message",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "message"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "detail",
+        "type_info": "Jsonb",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "detail"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "raised_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "raised_at"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "cleared_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "cleared_at"
+          }
+        }
+      },
+      {
+        "ordinal": 10,
+        "name": "acked_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "acked_at"
+          }
+        }
+      },
+      {
+        "ordinal": 11,
+        "name": "acked_by",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "acked_by"
+          }
+        }
+      },
+      {
+        "ordinal": 12,
+        "name": "silenced_by",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "alarms",
+            "name": "silenced_by"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Jsonb",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "4eeb2d3eef6c311b8a823ed4771bb5e8f3e2a26612bd1b6d5ca0db40da8cc5ba"
+}

@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE device_credentials SET kind = $3, rotated_at = now()\n            WHERE device_id = $1 AND kind = $2\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "6bb3e9c2b3dd8a35e912ba389abe1076788b43c1c279ff2d3b0dd3b2a4371d61"
+}

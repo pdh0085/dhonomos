@@ -1,0 +1,19 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE device_credentials SET secret_ciphertext = $4, nonce = $5, key_id = $6\n            WHERE device_id = $1 AND kind = $2 AND secret_ciphertext = $3\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Bytea",
+        "Bytea",
+        "Bytea",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "49df1be1f56f0c97024cb6e82e25d83ecb31a275f2557490ebeec72deee81aaf"
+}

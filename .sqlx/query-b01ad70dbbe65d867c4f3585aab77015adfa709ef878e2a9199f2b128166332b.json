@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE job_devices jd SET\n                state = CASE\n                    WHEN t.state = 'succeeded' AND $2 THEN 'verifying'\n                    WHEN t.state = 'succeeded' THEN 'succeeded'\n                    WHEN t.state = 'cancelled' THEN 'cancelled'\n                    ELSE 'failed'\n                END,\n                verify_deadline = CASE WHEN t.state = 'succeeded' AND $2\n                    THEN now() + make_interval(secs => $3::bigint) END,\n                finished_at = CASE WHEN t.state = 'succeeded' AND $2 THEN NULL ELSE now() END,\n                error = CASE WHEN t.state = 'expired' THEN 'task expired before the device ran it'\n                    ELSE t.error END\n            FROM tasks t\n            WHERE jd.job_id = $1 AND jd.state = 'dispatched' AND t.id = jd.task_id\n              AND t.state IN ('succeeded', 'failed', 'cancelled', 'expired')\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Bool",
+        "Int8"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "b01ad70dbbe65d867c4f3585aab77015adfa709ef878e2a9199f2b128166332b"
+}

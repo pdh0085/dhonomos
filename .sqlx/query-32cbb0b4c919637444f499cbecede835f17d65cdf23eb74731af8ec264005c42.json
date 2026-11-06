@@ -1,0 +1,45 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO devices (id, tenant_id, protocol, oui, product_class, serial_number, tags)\n            VALUES ($1, $2, 'cwmp', $3, $4, $5, $6)\n            ON CONFLICT (tenant_id, oui, product_class, serial_number) WHERE protocol = 'cwmp'\n            DO NOTHING\n            RETURNING id, status\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "status",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "status"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "TextArray"
+      ]
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "32cbb0b4c919637444f499cbecede835f17d65cdf23eb74731af8ec264005c42"
+}

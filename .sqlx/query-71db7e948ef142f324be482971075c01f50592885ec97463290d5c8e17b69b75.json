@@ -1,0 +1,52 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT yaml, updated_by, updated_at FROM alarm_rule_sets WHERE tenant_id = $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "yaml",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarm_rule_sets",
+            "name": "yaml"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "updated_by",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "alarm_rule_sets",
+            "name": "updated_by"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "updated_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "alarm_rule_sets",
+            "name": "updated_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      false
+    ]
+  },
+  "hash": "71db7e948ef142f324be482971075c01f50592885ec97463290d5c8e17b69b75"
+}

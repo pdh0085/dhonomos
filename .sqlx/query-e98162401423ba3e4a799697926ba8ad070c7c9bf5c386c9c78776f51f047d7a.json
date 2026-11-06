@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE device_credentials SET confirmed_at = now()\n            WHERE device_id = $1 AND kind = 'acs_auth' AND confirmed_at IS NULL\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "e98162401423ba3e4a799697926ba8ad070c7c9bf5c386c9c78776f51f047d7a"
+}

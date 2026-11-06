@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE tasks SET result = $2,\n                trace = trace || task_step('waiting', attempts, 'waiting for the completion report')\n            WHERE id = $1 AND state = 'running'\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Jsonb"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "676ccfc58cb7aa6a7d6634c25d7e6879fdf41bd44519d54f68e9c6f0c22328db"
+}

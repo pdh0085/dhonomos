@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT state_revision FROM wg_hubs WHERE id = $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "state_revision",
+        "type_info": "Int8",
+        "origin": {
+          "Table": {
+            "table": "wg_hubs",
+            "name": "state_revision"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "d1ea253f8e699498e37619d97eb6a73856d71f4e0f78ab65270d238b1386fa94"
+}

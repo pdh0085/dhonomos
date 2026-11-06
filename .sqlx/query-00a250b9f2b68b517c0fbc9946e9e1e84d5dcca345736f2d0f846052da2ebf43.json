@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE devices SET usp_ws_url = $3 WHERE id = $1 AND tenant_id = $2 AND protocol = 'usp'",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "00a250b9f2b68b517c0fbc9946e9e1e84d5dcca345736f2d0f846052da2ebf43"
+}

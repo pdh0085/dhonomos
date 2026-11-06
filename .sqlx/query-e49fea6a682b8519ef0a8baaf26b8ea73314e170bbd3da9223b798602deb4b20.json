@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE usp_certificates\n            SET revoked_at = now(), revoked_by = $3, revoke_reason = 'device deleted'\n            WHERE device_id = $1 AND tenant_id = $2 AND revoked_at IS NULL\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "e49fea6a682b8519ef0a8baaf26b8ea73314e170bbd3da9223b798602deb4b20"
+}

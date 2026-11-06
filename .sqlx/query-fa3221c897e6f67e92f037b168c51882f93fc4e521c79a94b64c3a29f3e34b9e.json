@@ -1,0 +1,37 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT k.v AS \"key!\", d.id\n            FROM unnest($3::text[]) AS k(v)\n            JOIN devices d ON d.tenant_id = $1 AND (\n                ($2 = 'id' AND d.id::text = k.v)\n                OR ($2 = 'serial_number' AND d.serial_number = k.v)\n                OR ($2 = 'endpoint_id' AND d.endpoint_id = k.v))\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "key!",
+        "type_info": "Text",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 1,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "devices",
+            "name": "id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "TextArray"
+      ]
+    },
+    "nullable": [
+      null,
+      false
+    ]
+  },
+  "hash": "fa3221c897e6f67e92f037b168c51882f93fc4e521c79a94b64c3a29f3e34b9e"
+}

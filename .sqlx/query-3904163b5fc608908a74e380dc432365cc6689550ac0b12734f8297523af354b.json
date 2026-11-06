@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                    INSERT INTO wg_site_prefixes (id, member_id, prefix, description)\n                    VALUES ($1, $2, $3::text::cidr, $4)\n                    ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "3904163b5fc608908a74e380dc432365cc6689550ac0b12734f8297523af354b"
+}

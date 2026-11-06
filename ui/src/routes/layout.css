@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Phones: below Tailwind `md` (768px). Wider screens unaffected. */
+@media (max-width: 767.98px) {
+	/* iOS Safari zooms into a focused field with text under 16px. */
+	input:not([type='checkbox']):not([type='radio']),
+	select,
+	textarea {
+		font-size: 16px;
+	}
+
+	/* `<table class="stack">`: row -> block, cell -> "label value" line (label = `data-label`)
+	   -> wide tables need no sideways scroll.
+	   Cell = flex line -> wrap content of several nodes in 1 element. */
+	table.stack thead {
+		display: none;
+	}
+	table.stack,
+	table.stack tbody,
+	table.stack tr {
+		display: block;
+		width: 100%;
+	}
+	table.stack tr {
+		padding: 0.5rem 0;
+	}
+	table.stack td {
+		display: flex;
+		gap: 0.75rem;
+		min-width: 0;
+		padding: 0.25rem 0.75rem;
+		white-space: normal;
+		overflow-wrap: anywhere;
+	}
+	table.stack td[data-label]::before {
+		content: attr(data-label);
+		flex: 0 0 6.5rem;
+		color: rgb(100 116 139);
+		font-family: ui-sans-serif, system-ui, sans-serif;
+		font-weight: 400;
+		font-size: 0.75rem;
+		line-height: 1.25rem;
+	}
+	table.stack td:empty {
+		display: none;
+	}
+}

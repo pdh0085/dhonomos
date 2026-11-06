@@ -1,0 +1,246 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT m.id, m.network_id, m.kind, m.device_id, m.user_id, m.name, m.public_key,\n                   m.key_mode, m.preshared_key_enabled, host(m.address) AS \"address!\",\n                   m.revoked_at, m.revoked_reason, m.device_state, m.device_detail,\n                   m.device_checked_at, m.device_applied_hash, m.rotate_requested_at,\n               m.created_at, m.updated_at\n            FROM wg_members m\n            WHERE m.network_id = $1 AND ($2 OR m.revoked_at IS NULL)\n              AND ((m.kind = 'client' AND ($3 OR m.user_id = $4))\n                   OR (m.kind = 'device' AND EXISTS (\n                       SELECT 1 FROM devices d\n                       WHERE d.id = m.device_id AND d.tenant_id = $6 AND device_in_scope(d, $5))))\n            ORDER BY m.address, m.created_at, m.id\n            LIMIT $7 OFFSET $8\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "network_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "network_id"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "kind",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "kind"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "device_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "device_id"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "user_id",
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "user_id"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "name",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "public_key",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "public_key"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "key_mode",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "key_mode"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "preshared_key_enabled",
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "preshared_key_enabled"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "address!",
+        "type_info": "Text",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 10,
+        "name": "revoked_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "revoked_at"
+          }
+        }
+      },
+      {
+        "ordinal": 11,
+        "name": "revoked_reason",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "revoked_reason"
+          }
+        }
+      },
+      {
+        "ordinal": 12,
+        "name": "device_state",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "device_state"
+          }
+        }
+      },
+      {
+        "ordinal": 13,
+        "name": "device_detail",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "device_detail"
+          }
+        }
+      },
+      {
+        "ordinal": 14,
+        "name": "device_checked_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "device_checked_at"
+          }
+        }
+      },
+      {
+        "ordinal": 15,
+        "name": "device_applied_hash",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "device_applied_hash"
+          }
+        }
+      },
+      {
+        "ordinal": 16,
+        "name": "rotate_requested_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "rotate_requested_at"
+          }
+        }
+      },
+      {
+        "ordinal": 17,
+        "name": "created_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "created_at"
+          }
+        }
+      },
+      {
+        "ordinal": 18,
+        "name": "updated_at",
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "wg_members",
+            "name": "updated_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Bool",
+        "Bool",
+        "Uuid",
+        "Jsonb",
+        "Uuid",
+        "Int8",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      true,
+      false,
+      null,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "4f57e6f20087c755fc68b9ddb12b5a4edd1c365afb18e3cd5564bc0ec14315fd"
+}
