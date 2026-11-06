@@ -6,6 +6,18 @@ Dhonomos manages customer premises equipment (home gateways, routers, LTE/5G CPE
 ISPs with thousands to tens of thousands of devices. It needs one executable (`dhonomos`) and
 PostgreSQL. Licensed under Apache-2.0.
 
+![Device list](docs/images/devices.png)
+
+<details>
+<summary>More screenshots</summary>
+
+![Device page](docs/images/device.png)
+![Overview](docs/images/overview.png)
+
+</details>
+
+The screenshots show simulated devices (`crates/simulator`).
+
 ## The name
 
 **Dhonomos** = **DH** + **Oikonomos**. DH: the initials of its author, Donghyun.
@@ -40,8 +52,9 @@ Dhonomos is a server that looks after the devices in subscribers' homes.
   - Prometheus metrics, OpenTelemetry traces, config reload on SIGHUP, data retention.
   - Static binary in a `scratch` container image (about 22 MB), Docker Compose files.
 
-Measured: 50,000 simulated CPEs, 2,000 periodic Informs/s, 113 MB of memory, no errors
-([docs/perf/README.md](docs/perf/README.md)).
+Measured: 50,000 simulated CPEs, 2,000 periodic Informs/s, 113 MB of memory, no errors, with a
+larger database pool and session limit than the defaults (`--database-max-connections 96
+--acs-max-concurrent 4096`; [docs/perf/README.md](docs/perf/README.md), Korean).
 
 See [CHANGELOG.md](CHANGELOG.md) for the full list.
 
@@ -50,6 +63,8 @@ See [CHANGELOG.md](CHANGELOG.md) for the full list.
 Pre-1.0, in testing. There are no releases yet: build from source.
 Command-line flags, the API and the database schema can still change.
 Tested in a lab with OpenWrt-based CPEs (CWMP and USP) and with simulators.
+There has been no external security review yet; only internal reviews. Please report problems as
+described in [SECURITY.md](SECURITY.md).
 
 ## Building
 
@@ -90,17 +105,20 @@ Dockerfile (Alpine, musl).
 ## Quick start
 
 ```bash
-cp deploy/dhonomos.env.example deploy/dhonomos.env   # fill in the secrets (openssl rand -base64 32)
+cp deploy/dhonomos.env.example deploy/dhonomos.env   # fill in the secrets (openssl rand -base64 32),
+                                                     # DHONOMOS_CPE_USERNAME/PASSWORD and the ACS TLS cert
 docker compose -f deploy/docker-compose.yml up -d
 ```
 
 - Web UI: `http://127.0.0.1:8080`, user `admin`, password from the env file.
   The admin account must set up two-factor auth at the first login.
+  Step by step: [docs/guide/install.en.md](docs/guide/install.en.md).
 - The API and UI have no TLS of their own: put them behind a TLS reverse proxy before
   opening them to other hosts.
-- CPEs: set the ACS URL to `https://<server>:7547/`. The ACS needs a TLS certificate
-  (`DHONOMOS_ACS_TLS_CERT`, `DHONOMOS_ACS_TLS_KEY`); plain HTTP only with
-  `DHONOMOS_ACS_PLAINTEXT=true`, for isolated labs.
+- CPEs: set the ACS URL to `https://<server>:7547/`. The ACS does not start without a TLS
+  certificate (`DHONOMOS_ACS_TLS_CERT`, `DHONOMOS_ACS_TLS_KEY`) or `DHONOMOS_ACS_PLAINTEXT=true`
+  (plain HTTP, isolated labs only), and without CPE credentials (`DHONOMOS_CPE_USERNAME`,
+  `DHONOMOS_CPE_PASSWORD`) or `DHONOMOS_CPE_AUTH=none` (labs only).
 - USP over MQTT with Mosquitto: add `--profile usp`.
 
 Ports in the compose file: 7547/tcp ACS, 7548/tcp file server, 8080/tcp API and UI (loopback only).
@@ -128,7 +146,8 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before sending a change.
 
 | Path | Content |
 |---|---|
-| [docs/guide/install.md](docs/guide/install.md) | Installation, first CPE and USP Agent |
+| [docs/guide/install.en.md](docs/guide/install.en.md) | Installation, first CPE and USP Agent (English) |
+| [docs/guide/install.md](docs/guide/install.md) | The same in Korean |
 | [docs/guide/operations.md](docs/guide/operations.md) | Processes, secrets, SSO, two-factor auth, device scopes, reload, backup, upgrade, monitoring, troubleshooting |
 | [docs/guide/presets.md](docs/guide/presets.md) | Presets and task reference |
 | [docs/guide/filters.md](docs/guide/filters.md) | Device filter expressions |
@@ -136,7 +155,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before sending a change.
 | [docs/perf/README.md](docs/perf/README.md) | Performance measurements |
 | `/api/v1/openapi.json` | REST API (OpenAPI 3.1), served by a running server |
 
-The guides under `docs/` are written in Korean for now. The web UI, API errors and logs are in English.
+The installation guide is in English and Korean; the other guides under `docs/` are in Korean for now. The web UI, API errors and logs are in English.
 
 ## Security
 

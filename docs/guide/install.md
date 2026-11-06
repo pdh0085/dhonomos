@@ -24,7 +24,7 @@ docker load < downloads/dhonomos-0.1.0-image.tar.gz
 cp deploy/dhonomos.env.example deploy/dhonomos.env
 openssl rand -base64 32   # 비밀값마다 새로 만들어 넣는다
 ```
-예시 파일의 비밀값은 일부러 비어 있다. 채울 값: `POSTGRES_PASSWORD`, `DHONOMOS_ADMIN_PASSWORD`(10자 이상), `DHONOMOS_FILES_SECRET`(**32바이트 이상**이어야 하고, 바꾸면 기존 링크·STUN 비밀번호가 무효), `DHONOMOS_SECRETS_KEY`(장비 자격증명 암호화), `DHONOMOS_FILES_PUBLIC_URL`(CPE가 파일 서버에 닿는 주소). `DHONOMOS_FILES_SECRET`과 `DHONOMOS_ADMIN_PASSWORD`는 `change-me`·`changeme`·`secret`·`password`나 `change-me`를 포함한 값이면 기동을 거부한다. `--files-secret`이 32바이트보다 짧아도 거부한다: 이 키 하나가 다운로드·업로드·BulkData 링크의 서명과 STUN 비밀번호 유도에 쓰여서, 서명된 링크 하나로 짧은 키를 오프라인에서 추측할 수 있기 때문이다. 파일 서버를 HTTPS로 열려면 `DHONOMOS_FILES_TLS_CERT/KEY`(PEM 파일)를 주고 `DHONOMOS_FILES_PUBLIC_URL`을 `https://`로 쓴다. 인증서 파일을 갱신하면 재기동 없이 반영된다([운영 가이드](operations.md) 4c-1).
+예시 파일의 비밀값은 일부러 비어 있다. 채울 값: `POSTGRES_PASSWORD`, `DHONOMOS_ADMIN_PASSWORD`(10자 이상), `DHONOMOS_FILES_SECRET`(**32바이트 이상**이어야 하고, 바꾸면 기존 링크·STUN 비밀번호가 무효), `DHONOMOS_SECRETS_KEY`(장비 자격증명 암호화), `DHONOMOS_FILES_PUBLIC_URL`(CPE가 파일 서버에 닿는 주소), `DHONOMOS_CPE_USERNAME/PASSWORD`(CPE 공용 자격증명, 5절), `DHONOMOS_ACS_TLS_CERT/KEY`(격리된 실험망이면 대신 `DHONOMOS_ACS_PLAINTEXT=true`, 5절). `DHONOMOS_FILES_SECRET`과 `DHONOMOS_ADMIN_PASSWORD`는 `change-me`·`changeme`·`secret`·`password`나 `change-me`를 포함한 값이면 기동을 거부한다. `--files-secret`이 32바이트보다 짧아도 거부한다: 이 키 하나가 다운로드·업로드·BulkData 링크의 서명과 STUN 비밀번호 유도에 쓰여서, 서명된 링크 하나로 짧은 키를 오프라인에서 추측할 수 있기 때문이다. 파일 서버를 HTTPS로 열려면 `DHONOMOS_FILES_TLS_CERT/KEY`(PEM 파일)를 주고 `DHONOMOS_FILES_PUBLIC_URL`을 `https://`로 쓴다. 인증서 파일을 갱신하면 재기동 없이 반영된다([운영 가이드](operations.md) 4c-1).
 
 ## 4. 기동
 ```bash
@@ -33,7 +33,7 @@ docker compose -f deploy/docker-compose.yml logs -f dhonomos   # "API listening"
 ```
 브라우저에서 `admin` / `DHONOMOS_ADMIN_PASSWORD`로 로그인한다(서버에서 직접 보려면 `http://127.0.0.1:8080`). Users & keys에서 운영자 계정과 자동화용 API 키를 만든다.
 
-**admin은 2단계 인증이 필수**(기본, ADR-100)라서 첫 로그인 뒤 Account 화면이 열린다. 인증 앱으로 QR을 읽고 코드를 확인한 다음, 나오는 복구 코드 10개를 안전한 곳에 보관한다(자세한 내용과 휴대폰 분실 절차는 [운영 가이드 3c](operations.md#3c-2단계-인증totp)). 이를 위해 `DHONOMOS_SECRETS_KEY`가 필요하다(`deploy/dhonomos.env.example`에 이미 있다). 격리된 실험망에서 끄려면 `DHONOMOS_REQUIRE_ADMIN_TOTP=false`.
+**admin은 2단계 인증이 필수**(기본)라서 첫 로그인 뒤 Account 화면이 열린다. 인증 앱으로 QR을 읽고 코드를 확인한 다음, 나오는 복구 코드 10개를 안전한 곳에 보관한다(자세한 내용과 휴대폰 분실 절차는 [운영 가이드 3c](operations.md#3c-2단계-인증totp)). 이를 위해 `DHONOMOS_SECRETS_KEY`가 필요하다(`deploy/dhonomos.env.example`에 이미 있다). 격리된 실험망에서 끄려면 `DHONOMOS_REQUIRE_ADMIN_TOTP=false`.
 
 ### API·웹 UI는 TLS 리버스 프록시 뒤에서
 API와 웹 UI에는 자체 TLS가 없다. 로그인 비밀번호와 세션 쿠키가 평문으로 다니지 않게, compose는 8080을 호스트의 `127.0.0.1`에만 게시한다. 다른 곳에서 쓰려면 같은 호스트(또는 신뢰하는 내부망)의 TLS 종단 리버스 프록시(nginx, Caddy, HAProxy 등)를 앞에 두고, `deploy/dhonomos.env`에 `DHONOMOS_SECURE_COOKIES=true`를 준다(세션 쿠키에 `Secure`). 예(Caddy; 인증서는 자동 발급):
@@ -45,7 +45,7 @@ dhonomos.example.net {
 인터넷에 여는 구성(신뢰 프록시 주소, 공개 주소, 2단계 필수 역할, 세션 제한, Apache 예)은 [운영 가이드 2b](operations.md#2b-관리-ui를-인터넷에-열기1단계)에 있다. 루프백이 아닌 주소에서 API를 열었는데 `DHONOMOS_SECURE_COOKIES`가 꺼져 있으면 기동 로그에 `the API listens on a network address without --secure-cookies` 경고가 나온다(컨테이너 안에서는 `[::]:8080`이라 compose에서는 이 경고가 보이면 `DHONOMOS_SECURE_COOKIES=true`를 준다는 뜻이다).
 
 ## 5. 첫 CPE 붙이기
-ACS는 TLS가 있어야 뜬다: `DHONOMOS_ACS_TLS_CERT/KEY`(PEM 파일)를 주거나, TLS를 종단하는 앞단 프록시 뒤·격리된 실험망에서만 `DHONOMOS_ACS_PLAINTEXT=true`로 평문 HTTP를 허용한다(예시 env에서는 주석 처리돼 있다). CPE의 ACS URL을 `https://<서버>:7547/`(평문을 허용했다면 `http://`)로 설정한다. 첫 Inform이 오면 장비 목록에 나타나고 zero-touch가 전체 파라미터를 읽는다. 장비 인증은 기본이 `DHONOMOS_CPE_AUTH=digest`이고 `DHONOMOS_CPE_USERNAME/PASSWORD`(또는 장비별 자격증명)를 주어야 기동한다. `DHONOMOS_CPE_AUTH=none`은 아무 클라이언트나 아무 CPE 행세를 하게 하므로 격리된 실험망 전용이며, 루프백이 아닌 주소에서는 기동 로그에 `the ACS takes CPEs without authentication` 경고가 나온다.
+ACS는 TLS가 있어야 뜬다: `DHONOMOS_ACS_TLS_CERT/KEY`(PEM 파일)를 주거나, TLS를 종단하는 앞단 프록시 뒤·격리된 실험망에서만 `DHONOMOS_ACS_PLAINTEXT=true`로 평문 HTTP를 허용한다(예시 env에서는 주석 처리돼 있다). CPE의 ACS URL을 `https://<서버>:7547/`(평문을 허용했다면 `http://`)로 설정한다. 첫 Inform이 오면 장비 목록에 나타나고 zero-touch가 전체 파라미터를 읽는다. 장비 인증은 기본이 `DHONOMOS_CPE_AUTH=digest`이고 공용 `DHONOMOS_CPE_USERNAME/PASSWORD`를 주어야 기동한다(zero-touch에서 발급하는 장비별 자격증명은 그 위에 더해진다). `DHONOMOS_CPE_AUTH=none`은 아무 클라이언트나 아무 CPE 행세를 하게 하므로 격리된 실험망 전용이며, 루프백이 아닌 주소에서는 기동 로그에 `the ACS takes CPEs without authentication` 경고가 나온다.
 
 ## 6. USP (선택)
 ```bash
@@ -79,7 +79,7 @@ DHONOMOS_USP_WS_CLIENT_CERT=required              # 운영 권장: none | option
 - `eid`는 MQTT 브로커·STOMP와 같은 규칙으로 검사한다: 비어 있지 않고 256바이트 이하, 공백·제어 문자와 `+` `#` `/`가 없어야 하며, 어긋나면 400.
 - Controller가 Agent의 WebSocket 서버에 접속하는 방향(`DHONOMOS_USP_WS_CLIENTS`, 위)은 이 설정과 무관하다.
 
-### 내장 MQTT 브로커 (ADR-093)
+### 내장 MQTT 브로커
 외부 브로커 없이 Agent가 Dhonomos에 직접 MQTT 5.0으로 접속한다. 공용 첫 접속 계정과 수용 정책(`--onboarding`, `--allowed-oui`)으로 CWMP처럼 미리 등록하지 않은 장비도 받는다. 외부 브로커 모드와 동시에 켤 수 있다.
 ```bash
 DHONOMOS_USP_MQTT_BROKER_LISTEN=0.0.0.0:1883
@@ -98,10 +98,12 @@ Agent 쪽 설정: Transport MQTT, 호스트·포트, 위 Username/Password, Cont
 - Agent의 EndpointID는 TLS 클라이언트 인증서의 SAN → CONNECT의 `usp-endpoint-id` 사용자 속성(TR-369 MQTT 5.0 Agent는 항상 보낸다) → 첫 Record의 `from_id` 순으로 정한다. 공용 계정에서는 `usp-endpoint-id`가 인증되지 않은 주장이므로, 운영에서는 장비 인증서(wss와 같은 USP CA)를 쓴다. 같은 EndpointID의 새 연결은 예전 연결을 DISCONNECT 0x8E로 끊는다 — 같은 EID를 가진 두 장비는 서로를 계속 끊는다.
 - Agent는 Controller 토픽(또는 `<Controller 토픽>/<EndpointID>`)에만 쓸 수 있다. 와일드카드·공유 구독, QoS 2, retained 메시지는 거절한다. 메시지는 저장하지 않는다: 접속하지 않은 Agent에게 보내려던 작업은 다음 접속 때 다시 나간다.
 - 연결이 끊기면(소켓 종료, Keep Alive의 1.5배 무응답) Controller가 바로 안다. 마지막 접속 시각(`last_contact_at`)은 그 연결에서 마지막으로 받은 시각이다.
-- MQTT 3.1.1 클라이언트는 아직 받지 않는다(로드맵 2단계).
+- MQTT 3.1.1 클라이언트는 아직 받지 않는다(예정).
 
 obuspa 컨테이너로 확인하기(`deploy/obuspa/factory_reset_mqtt_broker.txt`):
 ```bash
+# obuspa 이미지를 한 번 만든다(deploy/obuspa/Dockerfile):
+docker compose -f deploy/docker-compose.dev.yml --profile usp build obuspa
 # 공용 비밀번호가 든 파일은 다른 사용자가 읽지 못하게 만든다(기본 umask로 /tmp에 쓰지 않는다).
 d=$(mktemp -d)   # 0700
 sed 's/"PASSWORD"/"<공용 비밀번호>"/' deploy/obuspa/factory_reset_mqtt_broker.txt \
@@ -112,7 +114,7 @@ rm -rf "$d"
 ```
 Dhonomos와 같은 호스트에서 `--network host`로 실행하며 파일의 `BrokerAddress`/`BrokerPort`(기본 `127.0.0.1:1883`)를 맞춘다. TLS는 `TransportProtocol "TLS"`, 포트 8883, `-t <USP CA의 ca.pem>`을 더한다. 로그에 `CONNACK`의 `response_information_topic`·`subscribe-topic`, 이어서 Dhonomos 로그에 `agent connected ... reply_to=mqtt:<EndpointID>`가 나오면 된다. 컨테이너를 `docker kill`하면 몇십 밀리초 안에 `agent disconnected (MTP closed)`가 찍힌다.
 
-## 7. WireGuard 허브 (선택, ADR-110)
+## 7. WireGuard 허브 (선택)
 운영자 PC와 CPE가 WireGuard로 붙는 허브는 별도 프로그램 `dhonomos-wg-hub`가 맡는다. Dhonomos 서버와 같은 호스트에 둬도 되고 다른 호스트에 둬도 된다. 허브에는 도커가 필요 없다. 공인 주소(또는 UDP 포트 포워딩)가 있는 Linux 호스트에 systemd 서비스로 띄운다.
 
 준비할 것:
